@@ -42,5 +42,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3709437333
+    locked: 0
+  - name: floor
+    uniqueID: 3132764803
+    locked: 0
   m_RenderingLayers:
   - Default
