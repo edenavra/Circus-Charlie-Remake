@@ -58,5 +58,8 @@ TagManager:
   - name: Charlie
     uniqueID: 240981707
     locked: 0
+  - name: Obsticles
+    uniqueID: 4253535653
+    locked: 0
   m_RenderingLayers:
   - Default
