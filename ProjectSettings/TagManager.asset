@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Background
+  - Floor
+  - Charlie
+  - Lion
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -12,10 +16,10 @@ TagManager:
   - Background
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Floor
+  - Charlie
+  - Lion
+  - Wall
   - 
   - 
   - 
@@ -45,8 +49,14 @@ TagManager:
   - name: Background
     uniqueID: 3709437333
     locked: 0
-  - name: floor
+  - name: Floor
     uniqueID: 3132764803
+    locked: 0
+  - name: Lion
+    uniqueID: 3163062167
+    locked: 0
+  - name: Charlie
+    uniqueID: 240981707
     locked: 0
   m_RenderingLayers:
   - Default
