@@ -10,7 +10,6 @@ public class FitCameraToWorldDimensions : MonoBehaviour
     [SerializeField] private float width = 8f; 
     [SerializeField] private float height = 6f;
     private float _currRatio;
-
     private void Awake()
     {
         if (cam == null)
