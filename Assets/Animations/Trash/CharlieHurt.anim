@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LionJump
+  m_Name: CharlieHurt
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 6019676286524353749, guid: f86a680ec7fb44f4e962dca654b43c33, type: 3}
+      value: {fileID: 6934131561525182931, guid: f86a680ec7fb44f4e962dca654b43c33, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,7 +44,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 6019676286524353749, guid: f86a680ec7fb44f4e962dca654b43c33, type: 3}
+    - {fileID: 6934131561525182931, guid: f86a680ec7fb44f4e962dca654b43c33, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

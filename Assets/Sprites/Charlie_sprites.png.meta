@@ -1,0 +1,369 @@
+fileFormatVersion: 2
+guid: d692d74a4c0af4a45a4f532f667f3360
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5057183756971021030
+    second: Charlie_sprites_0
+  - first:
+      213: -3775287551291342725
+    second: Charlie_sprites_1
+  - first:
+      213: -6304324725731725195
+    second: Charlie_sprites_2
+  - first:
+      213: -2027970486318433000
+    second: Charlie_sprites_3
+  - first:
+      213: 7941515720049310889
+    second: Charlie_sprites_4
+  - first:
+      213: 2283009104238864422
+    second: Charlie_sprites_5
+  - first:
+      213: -1167616973168159447
+    second: Charlie_sprites_6
+  - first:
+      213: 1567757600994467863
+    second: Charlie_sprites_7
+  - first:
+      213: -750154390456437827
+    second: Charlie_sprites_8
+  - first:
+      213: -5627105217305228685
+    second: Charlie_sprites_9
+  - first:
+      213: 150533860433966498
+    second: Charlie_sprites_10
+  - first:
+      213: -1996698531518896320
+    second: Charlie_sprites_11
+  - first:
+      213: -8011505765663669798
+    second: Charlie_sprites_12
+  - first:
+      213: -6843706339934598648
+    second: Charlie_sprites_13
+  - first:
+      213: 7787702896600530231
+    second: Charlie_sprites_14
+  - first:
+      213: 414631040083342768
+    second: Charlie_sprites_15
+  - first:
+      213: -8267156656093378262
+    second: Charlie_sprites_16
+  - first:
+      213: -7565564581428499852
+    second: Charlie_sprites_17
+  - first:
+      213: -4299555870978170810
+    second: Charlie_sprites_18
+  - first:
+      213: 1708038438829741811
+    second: Charlie_sprites_19
+  - first:
+      213: -519951369863697400
+    second: Charlie_sprites_20
+  - first:
+      213: 1649124436280244338
+    second: Charlie_sprites_21
+  - first:
+      213: 8833331782989726922
+    second: Charlie_sprites_22
+  - first:
+      213: 4108650593059844291
+    second: Charlie_sprites_23
+  - first:
+      213: 9014466404960223431
+    second: Charlie_sprites_24
+  - first:
+      213: 6027729463786865365
+    second: Charlie_sprites_25
+  - first:
+      213: 7801901370806702849
+    second: Charlie_sprites_26
+  - first:
+      213: -7410319934536355177
+    second: Charlie_sprites_27
+  - first:
+      213: 5549039347384777615
+    second: Charlie_sprites_28
+  - first:
+      213: -3949555295115140004
+    second: Charlie_sprites_29
+  - first:
+      213: 4081538343814465682
+    second: Charlie_sprites_30
+  - first:
+      213: -4488704968300382459
+    second: Charlie_sprites_31
+  - first:
+      213: 6253996816294715739
+    second: Charlie_sprites_32
+  - first:
+      213: -621172777625404574
+    second: Charlie_sprites_33
+  - first:
+      213: 7080054755199415014
+    second: Charlie_sprites_34
+  - first:
+      213: -7714157274517864022
+    second: Charlie_sprites_35
+  - first:
+      213: 3697520465229300440
+    second: Charlie_sprites_36
+  - first:
+      213: -6012184141779623777
+    second: Charlie_sprites_37
+  - first:
+      213: 3767364519399602516
+    second: Charlie_sprites_38
+  - first:
+      213: 6251402406982467613
+    second: Charlie_sprites_39
+  - first:
+      213: 2488872696862251592
+    second: Charlie_sprites_40
+  - first:
+      213: 8404747097380104531
+    second: Charlie_sprites_41
+  - first:
+      213: 1361486825202738448
+    second: Charlie_sprites_42
+  - first:
+      213: 4912823178101518617
+    second: Charlie_sprites_43
+  - first:
+      213: 740292798289957543
+    second: Charlie_sprites_44
+  - first:
+      213: -4496660546255820027
+    second: Charlie_sprites_45
+  - first:
+      213: -4711914450952583970
+    second: Charlie_sprites_46
+  - first:
+      213: -4514309697659354306
+    second: Charlie_sprites_47
+  - first:
+      213: 4735030148139739073
+    second: Charlie_sprites_48
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Charlie_sprites_12
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 5
+        width: 210
+        height: 249
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad18f91f3f961d090800000000000000
+      internalID: -8011505765663669798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charlie_sprites_13
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 9
+        width: 197
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80a0c15e7554601a0800000000000000
+      internalID: -6843706339934598648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charlie_sprites_18
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 8
+        width: 193
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 640a66227b8e454c0800000000000000
+      internalID: -4299555870978170810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charlie_sprites_22
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 5
+        width: 211
+        height: 249
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac44544a47c469a70800000000000000
+      internalID: 8833331782989726922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 134a93e81f70748399137fb5f3612a1a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Charlie_sprites_12: -8011505765663669798
+      Charlie_sprites_13: -6843706339934598648
+      Charlie_sprites_18: -4299555870978170810
+      Charlie_sprites_22: 8833331782989726922
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

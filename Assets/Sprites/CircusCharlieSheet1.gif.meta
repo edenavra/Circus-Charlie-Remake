@@ -1965,6 +1965,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_15
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 125
+        width: 11
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16a082ca3fdd84a8ca7251fab56d960b
+      internalID: -1862241543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_16
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 127
+        width: 13
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e840feed937a14eedb009b6fb446a78e
+      internalID: 17655725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1986,6 +2030,8 @@ TextureImporter:
       CircusCharlieSheet1_12: -2475238293073515672
       CircusCharlieSheet1_13: -6965124002292027618
       CircusCharlieSheet1_14: -5232698686879893541
+      CircusCharlieSheet1_15: -1862241543
+      CircusCharlieSheet1_16: 17655725
       CircusCharlieSheet1_17: 6934131561525182931
       CircusCharlieSheet1_18: 7280047457027106605
       CircusCharlieSheet1_19: 8349412170164854963
