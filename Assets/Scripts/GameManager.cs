@@ -2,8 +2,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
     [SerializeField] private ScoreView scoreView;
-    private ScorePresenter scorePresenter;
+    private ScorePresenter scorePresenter;private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    
+    
 
     private void Start()
     {
@@ -11,8 +25,8 @@ public class GameManager : MonoBehaviour
         scorePresenter = new ScorePresenter(scoreModel, scoreView);
     }
 
-    public void OnFlamingPotJump()
+    public void AddScore(int score)
     {
-        scorePresenter.AddPoints(200); // מוסיפים 200 נקודות בקפיצה מוצלחת
+        scorePresenter.AddPoints(score); // מוסיפים 200 נקודות בקפיצה מוצלחת
     }
 }
