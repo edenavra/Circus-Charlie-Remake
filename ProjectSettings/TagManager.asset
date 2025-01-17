@@ -9,6 +9,7 @@ TagManager:
   - Charlie
   - Lion
   - Wall
+  - Podium
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Charlie
   - Lion
   - Wall
-  - 
+  - Podium
   - 
   - 
   - 
@@ -58,8 +59,11 @@ TagManager:
   - name: Charlie
     uniqueID: 240981707
     locked: 0
-  - name: Obsticles
+  - name: Obstacles
     uniqueID: 4253535653
+    locked: 0
+  - name: Podium
+    uniqueID: 30096243
     locked: 0
   m_RenderingLayers:
   - Default
