@@ -14,7 +14,7 @@ public class FireRing : MonoBehaviour
         {
             Debug.LogError("Charlie reference is missing in FlamingPot!");
         }
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();   
         _rb.gravityScale = 0;
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }

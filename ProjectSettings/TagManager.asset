@@ -53,7 +53,7 @@ TagManager:
   - name: Floor
     uniqueID: 3132764803
     locked: 0
-  - name: Lion
+  - name: BackOnstacle
     uniqueID: 3163062167
     locked: 0
   - name: Charlie
