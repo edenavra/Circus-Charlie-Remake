@@ -1969,12 +1969,12 @@ TextureImporter:
       name: CircusCharlieSheet1_15
       rect:
         serializedVersion: 2
-        x: 180
-        y: 125
-        width: 11
-        height: 74
+        x: 177
+        y: 126
+        width: 13
+        height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1991,12 +1991,12 @@ TextureImporter:
       name: CircusCharlieSheet1_16
       rect:
         serializedVersion: 2
-        x: 163
-        y: 127
+        x: 164
+        y: 126
         width: 13
-        height: 70
+        height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2005,6 +2005,138 @@ TextureImporter:
       bones: []
       spriteID: e840feed937a14eedb009b6fb446a78e
       internalID: 17655725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_76
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 126
+        width: 14
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b7672e6661ef42f0b99cc0bf9c94c1f
+      internalID: -1941969732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_77
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 126
+        width: 13
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 383f72adff2d044d2ba450147735ea53
+      internalID: -1406351947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_78
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 126
+        width: 13
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1b071d89684c4e13a04a154d01d5639
+      internalID: 48224801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_79
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 126
+        width: 13
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40d551a88df79472a9553fc8fe84ed36
+      internalID: -99975487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_80
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 126
+        width: 13
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d087a9214b15464d88b69fb19dfbd69
+      internalID: -1600013882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CircusCharlieSheet1_81
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 126
+        width: 13
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bc4467c85f61498da402bd3489d5427
+      internalID: 404307305
       vertices: []
       indices: 
       edges: []
@@ -2097,7 +2229,13 @@ TextureImporter:
       CircusCharlieSheet1_73: 7550661026974011403
       CircusCharlieSheet1_74: -3116016927935755469
       CircusCharlieSheet1_75: 6218082081221479878
+      CircusCharlieSheet1_76: -1941969732
+      CircusCharlieSheet1_77: -1406351947
+      CircusCharlieSheet1_78: 48224801
+      CircusCharlieSheet1_79: -99975487
       CircusCharlieSheet1_8: 5348672775771162368
+      CircusCharlieSheet1_80: -1600013882
+      CircusCharlieSheet1_81: 404307305
       CircusCharlieSheet1_9: -5987074014986965898
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] private int bonusPoints = 500; // נקודות בונוס
+    [SerializeField] private int bonusPoints = 5000; // נקודות בונוס
     [SerializeField] private Rigidbody2D rb;
     private void Awake()
     {

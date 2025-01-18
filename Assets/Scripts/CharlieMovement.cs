@@ -49,6 +49,12 @@ public class CharlieMovement : MonoBehaviour
             
             isGrounded = true;
         }
+
+        if (collision.gameObject.CompareTag("Podium"))
+        {
+            print("you won!");
+            //TODO: add winning animation
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
