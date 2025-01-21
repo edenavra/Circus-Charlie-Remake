@@ -4,6 +4,7 @@ public class CharlieMovement : MonoBehaviour
 {
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
+    private static readonly int Win = Animator.StringToHash("Win");
     [SerializeField] private  float moveSpeed = 2f; 
     [SerializeField] private  float jumpForce = 5f; 
     [SerializeField] private  Animator animator; 
@@ -28,7 +29,7 @@ public class CharlieMovement : MonoBehaviour
         float moveDirection = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(moveDirection, 0, 0) * moveSpeed * Time.deltaTime;
         transform.position += movement;
-        animator.SetFloat(Speed, Mathf.Abs(moveDirection));
+        animator.SetFloat(Speed, moveDirection);
     }
 
     private void HandleJump()
@@ -53,7 +54,7 @@ public class CharlieMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Podium"))
         {
             print("you won!");
-            //TODO: add winning animation
+            animator.SetTrigger(Win);
         }
     }
 
