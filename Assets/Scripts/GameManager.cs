@@ -3,8 +3,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    
+    [SerializeField] private Camera mainCamera;
+
+    public Camera MainCamera => mainCamera;
+    
     [SerializeField] private ScoreView scoreView;
-    private ScorePresenter scorePresenter;private void Awake()
+    private ScorePresenter scorePresenter;
+    
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -27,6 +34,6 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int score)
     {
-        scorePresenter.AddPoints(score); // מוסיפים 200 נקודות בקפיצה מוצלחת
+        scorePresenter.AddPoints(score); 
     }
 }

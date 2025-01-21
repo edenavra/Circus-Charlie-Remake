@@ -1,24 +1,47 @@
+using System;
+using Pool;
 using UnityEngine;
 
-public class FireRing : MonoBehaviour
+public class FireRing : MonoBehaviour, IPoolable
 {
-    [SerializeField] private GameObject charlie;
+    //private GameObject charlie;
     private Rigidbody2D _rb;
     private bool hasCollided = false;
     private int jumpPoints = 100;
     private float ringSpeed = -1f;
+    private Camera mainCamera;
     
+
     private void Start()
     {
-        if (charlie == null)
+        mainCamera = GameManager.Instance.MainCamera;
+        if (mainCamera == null)
         {
-            Debug.LogError("Charlie reference is missing in FlamingPot!");
+            Debug.LogError("Main Camera reference is missing in FireRing!");
+            return;
         }
+        
         _rb = GetComponent<Rigidbody2D>();   
         _rb.gravityScale = 0;
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
-    
+
+    private void Update()
+    {
+        if (mainCamera == null) return;
+
+        // חשב את גבול המסך השמאלי בעולם
+        Vector3 screenLeft = new Vector3(0, Screen.height / 2f, 0f);
+        Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
+
+        // בדוק האם הטבעת יצאה מגבול המסך
+        if (transform.position.x < worldLeft.x)
+        {
+            // החזר לבריכה
+            FireRingPool.Instance.Return(this);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_rb.linearVelocity.magnitude != ringSpeed)
@@ -58,5 +81,29 @@ public class FireRing : MonoBehaviour
             }
             hasCollided = false;
         }
+    }
+
+    public void Reset()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager.Instance is null in FireRing.Reset");
+            return;
+        }
+        mainCamera = GameManager.Instance.MainCamera;
+  
+        if (mainCamera == null )
+        {
+            Debug.LogError("FireRing.Reset: Missing references to Main Camera or Charlie");
+            return;
+        }
+        hasCollided = false;
+        //_rb.simulated = true;
+    }
+
+    public void OnEndOfScreen()
+    {
+        //_rb.simulated = false;
+        FireRingPool.Instance.Return(this);
     }
 }

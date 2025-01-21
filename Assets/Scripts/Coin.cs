@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using UnityEngine;
-
 public class Coin : MonoBehaviour
 {
     [SerializeField] private int bonusPoints = 5000; // נקודות בונוס
