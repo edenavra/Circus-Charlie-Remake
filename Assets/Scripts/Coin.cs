@@ -4,6 +4,7 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] private int bonusPoints = 5000; // נקודות בונוס
     [SerializeField] private Rigidbody2D rb;
+    SoundManager soundManager;
     private void Awake()
     {
         if (rb == null)
@@ -14,6 +15,7 @@ public class Coin : MonoBehaviour
                 Debug.LogError("No Rigidbody2D found! Make sure the coin has a Rigidbody2D component.");
             }
         }
+        soundManager = SoundManager.Instance;
     }
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -21,8 +23,10 @@ public class Coin : MonoBehaviour
         if (other.gameObject.CompareTag("Charlie"))
         {
             Debug.Log("Player collected the coin!");
+            
             GameManager.Instance.AddScore(bonusPoints); // הוספת נקודות לשחקן
             Destroy(gameObject); // השמדת המטבע
+            soundManager.PlayMoneyCollectionSound(transform);
         }
     }
 }

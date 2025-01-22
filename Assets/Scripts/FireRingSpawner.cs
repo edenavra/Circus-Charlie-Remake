@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pool;
+using Unity.VisualScripting;
 
 public class FireRingSpawner : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class FireRingSpawner : MonoBehaviour
     
     private float screenRightWorldX; 
     private Vector3 lastSpawnPosition = Vector3.positiveInfinity;
-
+    
     private void Start()
     {
         if (mainCamera == null)
