@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 022a4ed6752824e6384ab3f424422f20
+guid: 7cc601bbb98194452a53e96644139fba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6524947869032392908
-    second: metersPanel_0
+      213: -7916473267927966226
+    second: Screenshot 2025-01-22 at 23.28.45_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: metersPanel_0
+      name: Screenshot 2025-01-22 at 23.28.45_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 251
-        height: 96
+        width: 510
+        height: 196
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 43, y: 35, z: 32, w: 35}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 437d168db7ab275a0800000000000000
-      internalID: -6524947869032392908
+      spriteID: eed174f8189032290800000000000000
+      internalID: -7916473267927966226
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: acb7219805f8545319eb8224a3c3ff2e
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      metersPanel_0: -6524947869032392908
+      Screenshot 2025-01-22 at 23.28.45_0: -7916473267927966226
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

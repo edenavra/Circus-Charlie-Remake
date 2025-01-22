@@ -15,7 +15,6 @@ public class CharlieHealth : MonoBehaviour
         soundManager = SoundManager.Instance;
     }
     
-
     public void TakeDamage()
     {
         if (_isTakingDamage) return;
@@ -27,7 +26,6 @@ public class CharlieHealth : MonoBehaviour
 
         _isTakingDamage = false;
     }
-
     
     public void ReduceLife()
     {
@@ -66,5 +64,6 @@ public class CharlieHealth : MonoBehaviour
     {
         print("level reaset");
         soundManager.PlayLevelResetSound(transform);
+        GameManager.Instance.ResetLevel();
     }
 }
