@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 518807495}
-  spawnInterval: 2.5
+  ringPerSecond: 0.5
   minDistanceBetweenRings: 2
   fireRingPool: {fileID: 95208203}
   fireRingPools:
@@ -1250,6 +1250,7 @@ GameObject:
   - component: {fileID: 667788427}
   - component: {fileID: 667788426}
   - component: {fileID: 667788428}
+  - component: {fileID: 667788429}
   m_Layer: 7
   m_Name: Charlie
   m_TagString: Charlie
@@ -1383,7 +1384,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667788417}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1517,7 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f376832b2fc943ea943bc6a3b9304b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1.5
   jumpForce: 5.3
   animator: {fileID: 667788421}
 --- !u!114 &667788427
@@ -1630,6 +1631,43 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!70 &667788429
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667788417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0163126, y: 0.17868653}
+  m_Size: {x: 1.5453434, y: 2.132627}
+  m_Direction: 0
 --- !u!1001 &674781567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3670,7 +3708,7 @@ Transform:
   m_GameObject: {fileID: 1997404176}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.102812, y: -1.0181794, z: 0.00296664}
+  m_LocalPosition: {x: 28.102812, y: -0.9, z: 0.00296664}
   m_LocalScale: {x: 80, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

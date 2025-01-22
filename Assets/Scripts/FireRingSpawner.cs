@@ -7,8 +7,8 @@ public class FireRingSpawner : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera; 
    // [SerializeField] private float ringHeight = -0.41f; 
-    [SerializeField] private float spawnInterval = 2f; 
-    [SerializeField] private float minDistanceBetweenRings = 1.5f;
+    [SerializeField] private float ringPerSecond = 0.5f; 
+    [SerializeField] private float minDistanceBetweenRings = 2f;
     [SerializeField] private FireRingPool fireRingPool; 
     [SerializeField] private List<FireRingPool> fireRingPools; 
     [SerializeField] private List<float> spawnWeights;
@@ -16,6 +16,8 @@ public class FireRingSpawner : MonoBehaviour
     
     private float screenRightWorldX; 
     private Vector3 lastSpawnPosition = Vector3.positiveInfinity;
+    private float _timer = 0;
+    private Transform prevFireRing = null;
     
     private void Start()
     {
@@ -30,57 +32,22 @@ public class FireRingSpawner : MonoBehaviour
             Debug.LogError("FireRingPools or spawnWeights are not properly configured!");
             return;
         }
-
-        InvokeRepeating(nameof(SpawnFireRing), 0f, spawnInterval);
     }
 
     private void Update()
     {
-        screenRightWorldX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
+        screenRightWorldX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width+3, 0, 0)).x;
+        _timer += Time.deltaTime;
+        if (_timer >= 1f / ringPerSecond)
+        {
+            Debug.Log("Spawning ring");
+            SpawnFireRing();
+            _timer -= 1f / ringPerSecond;
+        }
     }
-
-    /*private void SpawnFireRing()
-    {
-        Vector3 spawnPosition = new Vector3(screenRightWorldX, ringHeight, 0);
-        if (Vector3.Distance(spawnPosition, lastSpawnPosition) < minDistanceBetweenRings)
-        {
-            print("Skipping spawn: rings would be too close.");
-            return;
-        }
-        
-        FireRing fireRing = GetRandomFireRing(); 
-        if (fireRing == null)
-        {
-            Debug.LogError("Failed to spawn FireRing: Pool returned null!");
-            return;
-        }
-        
-        fireRing.transform.position = spawnPosition;
-        fireRing.Reset();
-    }
-    
-    private FireRing GetRandomFireRing()
-    {
-        float totalWeight = 0f;
-        for (int i = 0; i < spawnWeights.Count; i++)
-        {
-            totalWeight += spawnWeights[i];
-        }
-
-        float randomWeight = Random.Range(0, totalWeight);
-        for (int i = 0; i < fireRingPools.Count; i++)
-        {
-            if (randomWeight < spawnWeights[i])
-            {
-                return fireRingPools[i].Get();
-            }
-            randomWeight -= spawnWeights[i];
-        }
-
-        return null; 
-    }*/
     private void SpawnFireRing()
     {
+        
         // בוחרים סוג טבעת וגובה
         int ringIndex = GetRandomFireRingIndex();
         if (ringIndex == -1)
@@ -92,14 +59,15 @@ public class FireRingSpawner : MonoBehaviour
         float height = heights[ringIndex];
 
         Vector3 spawnPosition = new Vector3(screenRightWorldX, height, 0);
-
         // בדיקת מרחק מהטבעת האחרונה
-        if (Vector3.Distance(spawnPosition, lastSpawnPosition) < minDistanceBetweenRings)
+        if (prevFireRing != null)
         {
-            Debug.Log("Skipping spawn: rings would be too close.");
-            return;
+            if (Vector3.Distance(spawnPosition, prevFireRing.position) < minDistanceBetweenRings)
+            {
+                Debug.Log("Skipping spawn: rings would be too close.");
+                return;
+            }
         }
-
         FireRing fireRing = fireRingPools[ringIndex].Get();
         if (fireRing == null)
         {
@@ -110,7 +78,8 @@ public class FireRingSpawner : MonoBehaviour
         fireRing.transform.position = spawnPosition;
         fireRing.Reset();
 
-        lastSpawnPosition = spawnPosition;
+        //lastSpawnPosition = spawnPosition;
+        prevFireRing = fireRing.transform;
     }
 
     private int GetRandomFireRingIndex()
