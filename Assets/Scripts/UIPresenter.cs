@@ -4,6 +4,9 @@ public class UIPresenter
 {
     private readonly UIModel model;
     private readonly UIView view;
+    
+    private int lastScore = -1;
+    private int lastLives = -1;
 
     public UIPresenter(UIModel model, UIView view)
     {
@@ -15,12 +18,49 @@ public class UIPresenter
     public void AddPoints(int points)
     {
         model.AddPoints(points);
-        UpdateView();
+        UpdateScore();
     }
-
+    
+    public void ReduceLife()
+    {
+        model.ReduceLife();
+        UpdateLives();
+    }
+    
+    public void SetLives(int lives)
+    {
+        model.SetLives(lives);
+        UpdateLives();
+    }
+    
     private void UpdateView()
     {
+        UpdateScore();
+        UpdateLives();
+        //UpdateBonusPoints();
+    }
+
+    /*private void UpdateView()
+    {
         view.UpdateScore(model.Score);
+    }*/
+    
+    private void UpdateScore()
+    {
+        if (model.Score != lastScore)
+        {
+            view.UpdateScore(model.Score);
+            lastScore = model.Score;
+        }
+    }
+
+    public void UpdateLives()
+    {
+        if (model.Lives != lastLives)
+        {
+            view.UpdateLives(model.Lives);
+            lastLives = model.Lives;
+        }
     }
 
     public void ResetScore()

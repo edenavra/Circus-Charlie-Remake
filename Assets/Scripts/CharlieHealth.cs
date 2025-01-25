@@ -15,6 +15,7 @@ public class CharlieHealth : MonoBehaviour
     {
         currentLives = _startingLives;
         soundManager = SoundManager.Instance;
+        //GameManager.Instance.UpdateLives(currentLives);
     }
     
     public void TakeDamage()
@@ -40,6 +41,7 @@ public class CharlieHealth : MonoBehaviour
         if (currentLives > 0)
         {
             currentLives--;
+            
             print("Lives: " + currentLives);  
             
             if (currentLives == 0)
@@ -74,5 +76,10 @@ public class CharlieHealth : MonoBehaviour
         print("level reaset");
         soundManager.PlayLevelResetSound(transform);
         GameManager.Instance.ResetLevel();
+    }
+    
+    public int getCurrentLives()
+    {
+        return currentLives;
     }
 }

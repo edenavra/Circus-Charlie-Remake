@@ -12,11 +12,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject charlie;
     private Vector3 _lastCheckpointPosition;
     private List<FlamingPot> activePots = new List<FlamingPot>();
+    private int currentLives = 5;
 
     public Camera MainCamera => mainCamera;
     
     [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
-    private UIPresenter _uiPresenter;
+    public UIModel _UIModel= new UIModel();
+    private UIPresenter _uiPresenter; 
     
     private void Awake()
     {
@@ -29,11 +31,18 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        if (uiView == null)
+        {
+            Debug.LogError("UIView is not assigned in GameManager. Please assign it in the Inspector.");
+            return;
+        }
         
         if(charlie == null)
         {
             Debug.LogError("No Charlie found! Make sure to assign the Charlie GameObject in the Inspector.");
         }
+        _uiPresenter= new UIPresenter(_UIModel,uiView);
+       
     }
 
     private void Start()
@@ -42,17 +51,35 @@ public class GameManager : MonoBehaviour
         _uiPresenter = new UIPresenter(scoreModel, uiView);
         _lastCheckpointPosition = charlie.transform.position;
         //Debug.Log($"Camera starting position: {Camera.main.transform.position}");
+        _uiPresenter.UpdateLives();
+        //UpdateUILives();
     }
-    
-    private void LateUpdate()
-    {
-        Debug.Log($"Camera position in LateUpdate: {Camera.main.transform.position}");
-    }
-
 
     public void AddScore(int score)
     {
         _uiPresenter.AddPoints(score); 
+    }
+    
+    public void UpdateLives(int lives)
+    {
+        if (_uiPresenter != null)
+        {
+            _uiPresenter.SetLives(lives);
+        }
+        else
+        {
+            Debug.LogError("UIPresenter is not initialized. Cannot update lives.");
+        }
+        //currentLives = lives;
+        //UpdateUILives();
+    }
+    
+    private void UpdateUILives()
+    {
+        if (uiView != null)
+        {
+            uiView.UpdateLives(currentLives);
+        }
     }
     
     public void UpdateCheckpoint(Vector3 checkpointPosition)
@@ -118,10 +145,10 @@ public class GameManager : MonoBehaviour
         
         charlie.transform.position = _lastCheckpointPosition;
         
-        
+        UpdateLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
         // Hide black screen
         //blackScreenCanvas.gameObject.SetActive(false);
-
+        
         
 
         // Resume game
