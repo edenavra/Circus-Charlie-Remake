@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class GameManager : MonoBehaviour
 
     public Camera MainCamera => mainCamera;
     
-    [SerializeField] private ScoreView scoreView;
-    private ScorePresenter scorePresenter;
+    [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
+    private UIPresenter _uiPresenter;
     
     private void Awake()
     {
@@ -37,8 +38,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        var scoreModel = new ScoreModel();
-        scorePresenter = new ScorePresenter(scoreModel, scoreView);
+        var scoreModel = new UIModel();
+        _uiPresenter = new UIPresenter(scoreModel, uiView);
         _lastCheckpointPosition = charlie.transform.position;
         //Debug.Log($"Camera starting position: {Camera.main.transform.position}");
     }
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int score)
     {
-        scorePresenter.AddPoints(score); 
+        _uiPresenter.AddPoints(score); 
     }
     
     public void UpdateCheckpoint(Vector3 checkpointPosition)

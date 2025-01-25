@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ScoreModel
+public class UIModel
 {
     private int score;
 

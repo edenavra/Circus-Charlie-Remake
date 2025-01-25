@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class ScorePresenter
+public class UIPresenter
 {
-    private readonly ScoreModel model;
-    private readonly ScoreView view;
+    private readonly UIModel model;
+    private readonly UIView view;
 
-    public ScorePresenter(ScoreModel model, ScoreView view)
+    public UIPresenter(UIModel model, UIView view)
     {
         this.model = model;
         this.view = view;
