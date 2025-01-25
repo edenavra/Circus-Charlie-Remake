@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class FlamingPot : MonoBehaviour
 {
-    [SerializeField] private GameObject charlie;
+    //[SerializeField] private GameObject charlie;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private Transform coinSpawnPoint;
     [SerializeField] private float launchForce = 5f; // עוצמת השיגור
@@ -11,12 +12,14 @@ public class FlamingPot : MonoBehaviour
     private bool hasCollided = false;
     private int jumpCount = 0;
     private int jumpPoints = 200;
+    private bool isCameraReady = false;
+    private Camera mainCamera;
     private void Start()
     {
-        if (charlie == null)
+        /*if (charlie == null)
         {
             Debug.LogError("Charlie reference is missing in FlamingPot!");
-        }
+        }*/
         if (coinPrefab == null)
         {
             Debug.LogError("Coin prefab is missing in FlamingPot! Please assign it in the Inspector.");
@@ -24,6 +27,38 @@ public class FlamingPot : MonoBehaviour
         if (coinSpawnPoint == null)
         {
             Debug.LogError("Coin spawn point is missing in FlamingPot! Please assign it in the Inspector.");
+        }
+        mainCamera = GameManager.Instance.MainCamera;
+        GameManager.Instance.RegisterPot(this);
+        //Debug.Log($"Pot starting at position: {transform.position}");
+        StartCoroutine(WaitForCameraReady());
+
+    }
+    
+    private IEnumerator WaitForCameraReady()
+    {
+        // המתן עד שהמצלמה תגיע למיקום שלה
+        yield return new WaitForEndOfFrame(); // המתנה לפריים אחד
+        yield return new WaitUntil(() => mainCamera.transform.position != Vector3.zero);
+
+        isCameraReady = true;
+        Debug.Log("Camera is ready, starting to track pots.");
+    }
+    
+    private void Update()
+    {
+        if (!isCameraReady || mainCamera == null) return;
+
+        // חשב את גבול המסך השמאלי בעולם
+        Vector3 screenLeft = new Vector3(0, Screen.height / 2f, mainCamera.nearClipPlane);
+        Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
+        //Debug.Log($"World Left: {worldLeft.x}, Pot Position: {transform.position.x}");
+
+         // בדוק האם הטבעת יצאה מגבול המסך + 5 מטר
+        if (transform.position.x < worldLeft.x-3)
+        {
+            //Debug.Log($"Destroying pot at position: {transform.position}");
+            Destroy(gameObject);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -36,6 +71,15 @@ public class FlamingPot : MonoBehaviour
             {
                 health.TakeDamage();
             }
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        // הסר את הסיר מה-GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnregisterPot(this);
         }
     }
 

@@ -24,6 +24,7 @@ public class FireRing : MonoBehaviour, IPoolable
         _rb = GetComponent<Rigidbody2D>();   
         _rb.gravityScale = 0;
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        
     }
 
     private void Update()
@@ -38,7 +39,7 @@ public class FireRing : MonoBehaviour, IPoolable
         if (transform.position.x < worldLeft.x)
         {
             // החזר לבריכה
-            FireRingPool.Instance.Return(this);
+            OnEndOfScreen();
         }
     }
 

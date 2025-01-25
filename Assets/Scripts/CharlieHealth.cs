@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharlieHealth : MonoBehaviour
@@ -5,6 +6,7 @@ public class CharlieHealth : MonoBehaviour
     private int _startingLives = 5;
     private int currentLives;
     private static readonly int IsHurt = Animator.StringToHash("IsHurt");
+    private static readonly int Reset = Animator.StringToHash("Reset");
     [SerializeField] private Animator animator;
     private SoundManager soundManager;
     private bool _isTakingDamage = false;
@@ -22,8 +24,14 @@ public class CharlieHealth : MonoBehaviour
 
         animator.SetTrigger(IsHurt);
         soundManager.PlayHitSound(transform);
-        ReduceLife();
+        StartCoroutine(HandleDamageAnimation());
+    }
+    
+    private IEnumerator HandleDamageAnimation()
+    {
+        yield return new WaitForSecondsRealtime(0.5f); 
 
+        ReduceLife();
         _isTakingDamage = false;
     }
     
@@ -41,6 +49,7 @@ public class CharlieHealth : MonoBehaviour
             else
             {
                 ReasetLevel();
+                animator.SetTrigger(Reset);
             }
         }
     }
