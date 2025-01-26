@@ -75,8 +75,8 @@ public class UIView : MonoBehaviour
     
     public void UpdateBonusPoints(int bonusPoints)
     {
-        string bonusStaticPart = "<color=#E91C63>BONUS-</color>"; 
-        string bonusDynamicPart = $"<color=#FFFFFF>{bonusPoints:D4}</color>"; 
+        string bonusStaticPart = "<color=#E91C63>BONUS</color>"; 
+        string bonusDynamicPart = $"<color=#FFFFFF>-{bonusPoints:D4}</color>"; 
 
         bonusText.text = $"{bonusStaticPart}{bonusDynamicPart}";
     }

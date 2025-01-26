@@ -56,10 +56,10 @@ public class CharlieMovement : MonoBehaviour
         }
 
         if (collision.gameObject.CompareTag("Podium"))
-        {
-            print("you won!");
+        { 
             animator.SetTrigger(Win);
             soundManager.PlayWinSound(transform);
+            GameManager.Instance.AwardBonusPoints();
         }
     }
 

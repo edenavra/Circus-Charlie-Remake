@@ -202,4 +202,22 @@ public class GameManager : MonoBehaviour
         }
         //var smallRings = SmallFireRingPool.Instance.GetAllActiveObjects();
     }
+    
+    public void AwardBonusPoints()
+    {
+        StartCoroutine(AwardBonusPointsCoroutine());
+    }
+
+    private IEnumerator AwardBonusPointsCoroutine()
+    {
+        int bonusPoints = _uiPresenter.GetBonusPoints();
+    
+        while (bonusPoints > 0)
+        {
+            _uiPresenter.ReduceBonusPoints(1);
+            _uiPresenter.AddPoints(1);
+            bonusPoints--;
+            yield return new WaitForSeconds(0.01f); 
+        }
+    }
 }

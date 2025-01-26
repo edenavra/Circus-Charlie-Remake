@@ -54,12 +54,6 @@ public class UIPresenter
             lastBonusPoints = model.BonusPoints;
         }
     }
-
-    /*private void UpdateView()
-    {
-        view.UpdateScore(model.Score);
-    }*/
-    
     private void UpdateScore()
     {
         if (model.Score != lastScore)
@@ -92,5 +86,10 @@ public class UIPresenter
     public void StopFlashing()
     {
         view.StopFlashing();
+    }
+    
+    public int GetBonusPoints()
+    {
+        return model.BonusPoints;
     }
 }
