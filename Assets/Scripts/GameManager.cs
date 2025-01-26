@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public UIModel _UIModel= new UIModel();
     private UIPresenter _uiPresenter; 
     
+    private Coroutine bonusCoroutine;
+    private bool isStageActive = false;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -50,11 +53,37 @@ public class GameManager : MonoBehaviour
         var scoreModel = new UIModel();
         _uiPresenter = new UIPresenter(scoreModel, uiView);
         _lastCheckpointPosition = charlie.transform.position;
-        //Debug.Log($"Camera starting position: {Camera.main.transform.position}");
         _uiPresenter.UpdateLives();
         _uiPresenter.StartFlashing();//todo: change this according to different screens
-        //UpdateUILives();
+        StartStage();//todo: change this according to different screens
     }
+    
+    public void StartStage()
+    {
+        if (bonusCoroutine != null)
+            StopCoroutine(bonusCoroutine);
+        
+        isStageActive = true;
+        bonusCoroutine = StartCoroutine(ReduceBonusOverTime());
+    }
+
+    public void EndStage()
+    {
+        if (bonusCoroutine != null)
+            StopCoroutine(bonusCoroutine);
+
+        isStageActive = false;
+    }
+    
+    private IEnumerator ReduceBonusOverTime()
+    {
+        while (isStageActive)
+        {
+            _uiPresenter.ReduceBonusPoints(10);
+            yield return new WaitForSeconds(0.5f); // כל חצי שנייה
+        }
+    }
+
 
     public void AddScore(int score)
     {

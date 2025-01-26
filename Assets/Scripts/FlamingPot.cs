@@ -42,7 +42,7 @@ public class FlamingPot : MonoBehaviour
         yield return new WaitUntil(() => mainCamera.transform.position != Vector3.zero);
 
         isCameraReady = true;
-        Debug.Log("Camera is ready, starting to track pots.");
+//        Debug.Log("Camera is ready, starting to track pots.");
     }
     
     private void Update()

@@ -40,7 +40,7 @@ public class FireRingSpawner : MonoBehaviour
         _timer += Time.deltaTime;
         if (_timer >= 1f / ringPerSecond)
         {
-            Debug.Log("Spawning ring");
+            //Debug.Log("Spawning ring");
             SpawnFireRing();
             _timer -= 1f / ringPerSecond;
         }

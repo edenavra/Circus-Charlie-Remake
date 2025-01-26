@@ -4,9 +4,11 @@ public class UIModel
 {
     private int score;
     private int lives = 5;
+    private int bonusPoints = 5000;
 
     public int Score => score;
     public int Lives => lives;
+    public int BonusPoints => bonusPoints;
 
     public void AddPoints(int points)
     {
@@ -28,5 +30,10 @@ public class UIModel
         {
             lives--;
         }
+    }
+    
+    public void ReduceBonusPoints(int amount)
+    {
+        bonusPoints = Mathf.Max(bonusPoints - amount, 0);
     }
 }

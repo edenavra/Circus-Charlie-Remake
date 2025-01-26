@@ -7,6 +7,7 @@ public class UIPresenter
     
     private int lastScore = -1;
     private int lastLives = -1;
+    private int lastBonusPoints = -1;
 
     public UIPresenter(UIModel model, UIView view)
     {
@@ -33,12 +34,25 @@ public class UIPresenter
         model.SetLives(lives);
         UpdateLives();
     }
-    
+    public void ReduceBonusPoints(int amount)
+    {
+        model.ReduceBonusPoints(amount);
+        UpdateBonusPoints();
+    }
     private void UpdateView()
     {
         UpdateScore();
         UpdateLives();
-        //UpdateBonusPoints();
+        UpdateBonusPoints();
+    }
+    
+    private void UpdateBonusPoints()
+    {
+        if (model.BonusPoints != lastBonusPoints)
+        {
+            view.UpdateBonusPoints(model.BonusPoints);
+            lastBonusPoints = model.BonusPoints;
+        }
     }
 
     /*private void UpdateView()

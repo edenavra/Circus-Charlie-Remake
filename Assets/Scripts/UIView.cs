@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UIView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI bonusText;
     [SerializeField] private List<Image> lifeImages;
     
     private bool isFlashing = false;
@@ -64,12 +65,19 @@ public class UIView : MonoBehaviour
     
     }
     
-    
     public void UpdateLives(int lives)
     {
         for (int i = 0; i < lifeImages.Count; i++)
         {
             lifeImages[i].enabled = i < lives-1;
         }
+    }
+    
+    public void UpdateBonusPoints(int bonusPoints)
+    {
+        string bonusStaticPart = "<color=#E91C63>BONUS-</color>"; 
+        string bonusDynamicPart = $"<color=#FFFFFF>{bonusPoints:D4}</color>"; 
+
+        bonusText.text = $"{bonusStaticPart}{bonusDynamicPart}";
     }
 }

@@ -1197,6 +1197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 0}
+  bonusText: {fileID: 0}
   lifeImages:
   - {fileID: 2053110241}
   - {fileID: 294571351}
@@ -2350,6 +2351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 2043793944}
+  bonusText: {fileID: 2068438067}
   lifeImages:
   - {fileID: 2053110241}
   - {fileID: 294571351}

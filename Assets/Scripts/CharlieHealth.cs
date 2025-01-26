@@ -42,8 +42,6 @@ public class CharlieHealth : MonoBehaviour
         {
             currentLives--;
             
-            print("Lives: " + currentLives);  
-            
             if (currentLives == 0)
             {
                 HandleGameOver();
@@ -73,7 +71,7 @@ public class CharlieHealth : MonoBehaviour
     }
     private void ReasetLevel()
     {
-        print("level reaset");
+//        print("level reaset");
         soundManager.PlayLevelResetSound(transform);
         GameManager.Instance.ResetLevel();
     }
