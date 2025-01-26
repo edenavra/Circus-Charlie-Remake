@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         _lastCheckpointPosition = charlie.transform.position;
         //Debug.Log($"Camera starting position: {Camera.main.transform.position}");
         _uiPresenter.UpdateLives();
+        _uiPresenter.StartFlashing();//todo: change this according to different screens
         //UpdateUILives();
     }
 

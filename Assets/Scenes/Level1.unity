@@ -1191,11 +1191,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427088168}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5935e7fc161f54debab593ab220c25b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
   lifeImages:
   - {fileID: 2053110241}
   - {fileID: 294571351}
@@ -2330,7 +2331,7 @@ GameObject:
   - component: {fileID: 675062215}
   - component: {fileID: 675062214}
   m_Layer: 0
-  m_Name: TempScoreView
+  m_Name: TempUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2348,7 +2349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5935e7fc161f54debab593ab220c25b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeImages: []
+  scoreText: {fileID: 2043793944}
+  lifeImages:
+  - {fileID: 2053110241}
+  - {fileID: 294571351}
+  - {fileID: 651655074}
+  - {fileID: 224156498}
 --- !u!4 &675062215
 Transform:
   m_ObjectHideFlags: 0
@@ -2564,7 +2570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 518807495}
   charlie: {fileID: 667788417}
-  uiView: {fileID: 427088173}
+  uiView: {fileID: 675062214}
 --- !u!4 &760396825
 Transform:
   m_ObjectHideFlags: 0

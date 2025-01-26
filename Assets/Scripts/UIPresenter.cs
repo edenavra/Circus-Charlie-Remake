@@ -13,6 +13,7 @@ public class UIPresenter
         this.model = model;
         this.view = view;
         UpdateView();
+        StartFlashing();
     }
 
     public void AddPoints(int points)
@@ -67,5 +68,15 @@ public class UIPresenter
     {
         model.ResetScore();
         UpdateView();
+    }
+    
+    public void StartFlashing()
+    {
+        view.StartFlashing();
+    }
+
+    public void StopFlashing()
+    {
+        view.StopFlashing();
     }
 }
