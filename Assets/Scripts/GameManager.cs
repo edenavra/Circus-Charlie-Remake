@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool IsGameActive { get; private set; } = false;
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject charlie;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     
     private Coroutine bonusCoroutine;
     private bool isStageActive = false;
+    
     
     private void Awake()
     {
@@ -60,10 +62,37 @@ public class GameManager : MonoBehaviour
         _uiPresenter = new UIPresenter(scoreModel, uiView);
         _lastCheckpointPosition = charlie.transform.position;
         _uiPresenter.UpdateLives();
-        _uiPresenter.StartFlashing();//todo: change this according to different screens
-        StartStage();//todo: change this according to different screens
+        //Time.timeScale = 0f;
+        IsGameActive = false;
+        ScreenManager.Instance.ShowMainMenu();
+    }
+    public void StartGame()
+    {
+        //Debug.Log("Game Started!");
+        IsGameActive = true; // מפעיל את המשחק
+        //ScreenManager.Instance.ShowGameScreen();
+        //Time.timeScale = 1f;
+        _uiPresenter.StartFlashing();
+        StartStage();
     }
     
+    public void PauseGame()
+    {
+        IsGameActive = false; // משהה את המשחק
+       // Time.timeScale = 0f;
+        ScreenManager.Instance.ShowStageScreen();
+        _uiPresenter.StopFlashing();
+        EndStage();
+    }
+    
+    public void ResumeGame()
+    {
+        IsGameActive = true; // מפעיל את המשחק
+        ScreenManager.Instance.ShowGameScreen();
+        _uiPresenter.StartFlashing();
+        StartStage();
+        //Time.timeScale = 1f;
+    }
     public void StartStage()
     {
         if (bonusCoroutine != null)
@@ -152,12 +181,13 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator RestartFromCheckpoint()
     {
-        Time.timeScale = 0f;
+        PauseGame();
+        ScreenManager.Instance.ShowStageScreen();
         // Display black screen
         //blackScreenCanvas.gameObject.SetActive(true);
-
+        
         // Wait for 1 second
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSeconds(2);
         
         DestroyPotsOnScreen();        
         ResetAllRings();
@@ -173,12 +203,13 @@ public class GameManager : MonoBehaviour
         
 
         // Resume game
-        Time.timeScale = 1;
+        ResumeGame();
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         Debug.Log("Game Over!");
+        ScreenManager.Instance.ShowGameOver();
         // Optionally: Load a Game Over screen or restart the level
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

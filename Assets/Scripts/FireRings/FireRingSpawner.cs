@@ -37,6 +37,7 @@ public class FireRingSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.IsGameActive) return;
         if (fireRingPool == null || smallFireRingPool == null)
         {
             fireRingPool = FireRingPool.Instance;

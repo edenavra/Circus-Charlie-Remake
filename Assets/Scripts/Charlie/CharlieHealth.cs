@@ -31,7 +31,7 @@ public class CharlieHealth : MonoBehaviour
     private IEnumerator HandleDamageAnimation()
     {
         yield return new WaitForSecondsRealtime(0.5f); 
-
+        soundManager.PlayLevelResetSound(transform);
         ReduceLife();
         _isTakingDamage = false;
     }
@@ -67,12 +67,14 @@ public class CharlieHealth : MonoBehaviour
     private void HandleGameOver()
     {
         Debug.Log("Game Over!");
+        //soundManager.PlayLevelResetSound(transform);
+        GameManager.Instance.GameOver();
         // כאן אפשר להוסיף לוגיקה להפסקת המשחק, מסך סיום וכו'.
     }
     private void ReasetLevel()
     {
 //        print("level reaset");
-        soundManager.PlayLevelResetSound(transform);
+        //soundManager.PlayLevelResetSound(transform);
         GameManager.Instance.ResetLevel();
     }
     

@@ -22,6 +22,7 @@ public class CharlieMovement : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.IsGameActive) return;
         HandleMovement();
         HandleJump();
     }

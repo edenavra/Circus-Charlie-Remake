@@ -34,6 +34,7 @@ public class FireRing : MonoBehaviour, IPoolable
     private void Update()
     {
         if (mainCamera == null) return;
+        if (!GameManager.Instance.IsGameActive) return;
 
         Vector3 screenLeft = new Vector3(0, Screen.height / 2f, 0f);
         Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);

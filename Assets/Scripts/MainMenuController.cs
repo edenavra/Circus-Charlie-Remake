@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -18,6 +19,11 @@ public class MainMenuController : MonoBehaviour
             flashingImage = GetComponent<Image>();
         }
         flashingImage.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        hasStarted = false;
     }
 
     private void Update()
@@ -49,13 +55,8 @@ public class MainMenuController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // קריאה לפונקציה שתתחיל את המשחק
-        StartGame();
+        ScreenManager.Instance.StartGameSequence();        
+        
     }
-
-    private void StartGame()
-    {
-        Debug.Log("Game Started!");
-        // כאן אפשר לקרוא לפונקציה שתפעיל את השלב, למשל:
-        // SceneManager.LoadScene("GameScene");
-    }
+    
 }
