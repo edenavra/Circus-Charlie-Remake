@@ -2308,7 +2308,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e88466dd77b4243b991c7d6856143c3e, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3208,6 +3208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 760396825}
   - component: {fileID: 760396824}
+  - component: {fileID: 760396826}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3245,6 +3246,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &760396826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760396823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb38b3ee2c8747bb8db47f52ac17ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Charlie: {fileID: 667788417}
+  Poduim: {fileID: 1587761463}
 --- !u!4 &804155876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4859208217872372194, guid: 820dc2c1b63a641a9ab73457c6006383, type: 3}

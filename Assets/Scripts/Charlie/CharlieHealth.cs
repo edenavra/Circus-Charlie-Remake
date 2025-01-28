@@ -68,7 +68,6 @@ public class CharlieHealth : MonoBehaviour
     
     private void HandleGameOver()
     {
-        Debug.Log("Game Over!");
         //soundManager.PlayLevelResetSound(transform);
         GameManager.Instance.GameOver();
         // כאן אפשר להוסיף לוגיקה להפסקת המשחק, מסך סיום וכו'.
