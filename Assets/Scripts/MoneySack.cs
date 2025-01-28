@@ -11,6 +11,7 @@ public class MoneySack : MonoBehaviour
     private void Start()
     {
         soundManager = SoundManager.Instance;
+        ResetSack();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,7 +29,12 @@ public class MoneySack : MonoBehaviour
             Debug.Log("Player collected the money sack!");
             GameManager.Instance.AddScore(bonusPoints); 
             soundManager.PlayMoneyCollectionSound(transform);
-            Destroy(gameObject); 
+            gameObject.SetActive(false);
         }
+    }
+
+    public void ResetSack()
+    {
+        gameObject.SetActive(true);
     }
 }

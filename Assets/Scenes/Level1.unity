@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  prefab: {fileID: 1175542044135575065, guid: 433c4157e4edc4263b057525f121f0a2, type: 3}
+  prefab: {fileID: 4619504357323755475, guid: 433c4157e4edc4263b057525f121f0a2, type: 3}
   parent: {fileID: 95208204}
 --- !u!4 &95208204
 Transform:
@@ -1572,7 +1572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 528691809}
-  - component: {fileID: 528691808}
+  - component: {fileID: 528691810}
   m_Layer: 0
   m_Name: FireRingSpawner
   m_TagString: Untagged
@@ -1580,31 +1580,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &528691808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 528691807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f644c2ea06947d48f083aea04c3086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 518807495}
-  ringPerSecond: 0.5
-  minDistanceBetweenRings: 2
-  fireRingPool: {fileID: 95208203}
-  fireRingPools:
-  - {fileID: 95208203}
-  - {fileID: 869515034}
-  spawnWeights:
-  - 8
-  - 2
-  heights:
-  - -0.45
-  - -0.23
 --- !u!4 &528691809
 Transform:
   m_ObjectHideFlags: 0
@@ -1620,6 +1595,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 598060213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528691810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528691807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f644c2ea06947d48f083aea04c3086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 518807495}
+  ringPerSecond: 0.5
+  minDistanceBetweenRings: 2
+  fireRingPool: {fileID: 95208203}
+  smallFireRingPool: {fileID: 869515038}
+  ringConfigs:
+  - fireRingType: 0
+    weight: 0.8
+    height: -0.41
+  - fireRingType: 1
+    weight: 0.2
+    height: -0.23
 --- !u!4 &596339692 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4859208217872372194, guid: 820dc2c1b63a641a9ab73457c6006383, type: 3}
@@ -2602,7 +2601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 869515035}
-  - component: {fileID: 869515034}
+  - component: {fileID: 869515038}
   m_Layer: 0
   m_Name: SmallFireRingPool
   m_TagString: Untagged
@@ -2610,21 +2609,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &869515034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869515033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d960166f3c3ac44e6b1563f1c1dd1064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPoolSize: 5
-  prefab: {fileID: 2732481284699091853, guid: 0876b25cc1fc54d738980657e1404439, type: 3}
-  parent: {fileID: 869515035}
 --- !u!4 &869515035
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,6 +2624,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 598060213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &869515038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869515033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b68661b7064f2eb0d4aadb8c173512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPoolSize: 5
+  prefab: {fileID: -3399427284135816816, guid: 0876b25cc1fc54d738980657e1404439, type: 3}
+  parent: {fileID: 869515035}
 --- !u!1001 &876217710
 PrefabInstance:
   m_ObjectHideFlags: 0

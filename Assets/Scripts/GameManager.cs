@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pool;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
@@ -10,11 +12,16 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject charlie;
+    //[SerializeField] private FireRingPool fireRingPool;
+    //[SerializeField] private SmallFireRingPool smallFireRingPool;
     private Vector3 _lastCheckpointPosition;
     private List<FlamingPot> activePots = new List<FlamingPot>();
     private int currentLives = 5;
+    public List<SmallFireRing> smallFireRings = new List<SmallFireRing>(); 
 
     public Camera MainCamera => mainCamera;
+    //public FireRingPool FireRingPool => fireRingPool;
+    //public SmallFireRingPool SmallFireRingPool => smallFireRingPool;
     
     [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
     public UIModel _UIModel= new UIModel();
@@ -56,6 +63,15 @@ public class GameManager : MonoBehaviour
         _uiPresenter.UpdateLives();
         _uiPresenter.StartFlashing();//todo: change this according to different screens
         StartStage();//todo: change this according to different screens
+        /*if (FireRingPool.Instance == null)
+        {
+            Debug.LogError("FireRingPool.Instance is not initialized!");
+        }
+
+        if (SmallFireRingPool.Instance == null)
+        {
+            Debug.LogError("SmallFireRingPool.Instance is not initialized!");
+        }*/
     }
     
     public void StartStage()
@@ -195,13 +211,54 @@ public class GameManager : MonoBehaviour
 
     private void ResetAllRings()
     {
-        var rings = FireRingPool.Instance.GetAllActiveObjects();
-        foreach (var ring in rings)
+        // List<MonoPool<FireRing>> allPools = new List<MonoPool<FireRing>> { FireRingPool.Instance, SmallFireRingPool.Instance };
+        /*List<MonoPool<FireRing>> allPools = new List<MonoPool<FireRing>>();
+        if (FireRingPool.Instance != null) allPools.Add(FireRingPool.Instance);
+        if (SmallFireRingPool.Instance != null) allPools.Add(SmallFireRingPool.Instance);
+        Debug.Log(allPools.Count);
+        foreach (var pool in allPools)
         {
-            ring.OnEndOfScreen();
+            Debug.Log(pool);
+            if (pool == null)
+            {
+                Debug.LogWarning("A pool is missing during reset!");
+                continue;
+            }
+            var activeRings = pool.GetAllActiveObjects();
+            Debug.Log($"Resetting {activeRings.Count} rings from pool {pool}");
+            foreach (var ring in activeRings)
+            {
+                ring.OnEndOfScreen();
+            }
+        }*/
+        if (FireRingPool.Instance == null)
+        {
+            Debug.LogError("FireRingPool.Instance is not initialized!");
         }
-        //var smallRings = SmallFireRingPool.Instance.GetAllActiveObjects();
+        else
+        {
+            var activeRings = FireRingPool.Instance.GetAllActiveObjects();
+            foreach (var ring in activeRings)
+            {
+                ring.OnEndOfScreen();
+            }
+        }
+
+        if (SmallFireRingPool.Instance == null)
+        {
+            Debug.LogError("SmallFireRingPool.Instance is not initialized!");
+        }
+        else
+        {
+            var activeRings = SmallFireRingPool.Instance.GetAllActiveObjects();
+            foreach (var ring in activeRings)
+            {
+                ring.OnEndOfScreen();
+            }
+        }
+        
     }
+
     
     public void AwardBonusPoints()
     {
@@ -219,5 +276,15 @@ public class GameManager : MonoBehaviour
             bonusPoints--;
             yield return new WaitForSeconds(0.01f); 
         }
+    }
+    
+    public void AddSmallFireRing(SmallFireRing ring)
+    {
+        smallFireRings.Add(ring);
+    }
+    
+    public void RemoveSmallFireRing(SmallFireRing ring)
+    {
+        smallFireRings.Remove(ring);
     }
 }

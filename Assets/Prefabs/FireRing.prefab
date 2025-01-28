@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 5733499859481559808}
   - component: {fileID: 4502577908608987771}
   - component: {fileID: 6061888302800601164}
-  - component: {fileID: 1175542044135575065}
   - component: {fileID: 1365632793967580472}
   - component: {fileID: 2040535943730382986}
-  m_Layer: 0
+  - component: {fileID: 4619504357323755475}
+  m_Layer: 11
   m_Name: FireRing
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,18 +148,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.004306793, y: -0.07747328}
   m_Size: {x: 0.50860596, y: 1.0688653}
   m_Direction: 0
---- !u!114 &1175542044135575065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309761332655816406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b1dbda802534573b8e73c7c1534634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1365632793967580472
 Rigidbody2D:
   serializedVersion: 5
@@ -209,6 +197,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4619504357323755475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309761332655816406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b1dbda802534573b8e73c7c1534634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4015270086225248159
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 3807501783588328681}
   - component: {fileID: 279872246122332279}
   - component: {fileID: 3998285183844588714}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LeftSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 6244504135888688789}
   - component: {fileID: 254344798038918704}
   - component: {fileID: 1753681363093422217}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RightSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}

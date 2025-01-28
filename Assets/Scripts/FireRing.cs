@@ -1,10 +1,18 @@
 using System;
 using Pool;
 using UnityEngine;
-
+public enum FireRingType
+{
+    Regular,
+    WithMoneySack
+}
 public class FireRing : MonoBehaviour, IPoolable
 {
     //private GameObject charlie;
+    private protected FireRingType ringType = FireRingType.Regular;
+    //[SerializeField] private bool hasMoneySack = false;
+    //[SerializeField] private MoneySack moneySack;
+    
     private Rigidbody2D _rb;
     private bool hasCollided = false;
     private int jumpPoints = 100;
@@ -12,8 +20,9 @@ public class FireRing : MonoBehaviour, IPoolable
     private Camera mainCamera;
     
 
-    private void Start()
+    protected virtual void Start()
     {
+        
         mainCamera = GameManager.Instance.MainCamera;
         if (mainCamera == null)
         {
@@ -24,21 +33,22 @@ public class FireRing : MonoBehaviour, IPoolable
         _rb = GetComponent<Rigidbody2D>();   
         _rb.gravityScale = 0;
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        
+        /*if (hasMoneySack && moneySack == null)
+        {
+            Debug.LogError("Money sack is missing for a ring that should have one.");
+        }*/
+        //ringType = FireRingType.Regular;
     }
 
     private void Update()
     {
         if (mainCamera == null) return;
 
-        // חשב את גבול המסך השמאלי בעולם
         Vector3 screenLeft = new Vector3(0, Screen.height / 2f, 0f);
         Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
 
-        // בדוק האם הטבעת יצאה מגבול המסך
         if (transform.position.x < worldLeft.x)
         {
-            // החזר לבריכה
             OnEndOfScreen();
         }
     }
@@ -84,7 +94,7 @@ public class FireRing : MonoBehaviour, IPoolable
         }
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         if (GameManager.Instance == null)
         {
@@ -100,11 +110,53 @@ public class FireRing : MonoBehaviour, IPoolable
         }
         hasCollided = false;
         //_rb.simulated = true;
+        /*if (hasMoneySack && moneySack != null)
+        {
+            moneySack.ResetSack();
+        }
+        else if (hasMoneySack && moneySack == null)
+        {
+            Debug.LogWarning($"Ring of type {ringType} is missing its MoneySack reference!");
+        }
+        hasMoneySack = (ringType == FireRingType.WithMoneySack);*/
+
     }
 
-    public void OnEndOfScreen()
+    public virtual void OnEndOfScreen()
     {
         //_rb.simulated = false;
+        //FireRingPool.Instance.Return(this);
+        /*switch (ringType)
+        {
+            case FireRingType.Regular:
+                if (FireRingPool.Instance != null)
+                    FireRingPool.Instance.Return(this);
+                else
+                    Debug.LogError("FireRingPool.Instance is null!");
+                break;
+            case FireRingType.WithMoneySack:
+                if (moneySack == null)
+                {
+                    Debug.LogError("Ring with MoneySack is missing its MoneySack reference!");
+                }
+                if (SmallFireRingPool.Instance != null)
+                    SmallFireRingPool.Instance.Return(this);
+                else
+                    Debug.LogError("SmallFireRingPool.Instance is null!");
+                break;
+            default:
+                Debug.LogError("Unknown FireRingType: Cannot return to pool");
+                break;
+        }*/
+        ReturnToPool();
+    }
+    protected virtual void ReturnToPool()
+    {
         FireRingPool.Instance.Return(this);
+    }
+    
+    public FireRingType GetFireRingType()
+    {
+        return ringType;
     }
 }
