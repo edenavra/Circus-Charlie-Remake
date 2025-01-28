@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Podium
   - Obstacle
+  - Shild
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - Floor
   - Charlie
-  - Lion
+  - Shild
   - Wall
   - Podium
   - Obstacle
@@ -59,6 +60,9 @@ TagManager:
     locked: 0
   - name: Charlie
     uniqueID: 240981707
+    locked: 0
+  - name: Shild
+    uniqueID: 2099782461
     locked: 0
   - name: Obstacles
     uniqueID: 4253535653

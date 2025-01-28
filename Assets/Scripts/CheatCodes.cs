@@ -1,3 +1,4 @@
+using Charlie;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,5 +30,23 @@ public class CheatCodes : MonoBehaviour
             GameManager.Instance.StartGame();
             Debug.Log("Game started!");
         }
+        
+        if(Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            ScreenManager.Instance.ShowStageScreen();
+            GameManager.Instance.PauseGame();
+            Debug.Log("Game paused!");
+        }
+        
+        if(Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit4Key.wasPressedThisFrame)
+        {
+            GameManager.Instance.Charlie.GetComponent<CharlieShild>().ActivateShield();
+        }
+
+        if (Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit5Key.wasPressedThisFrame)
+        {
+            GameManager.Instance.Charlie.GetComponent<CharlieShild>().DeactivateShield();
+        }
+        
     }
 }

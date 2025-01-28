@@ -1,32 +1,33 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+namespace FlamingPots
 {
-    [SerializeField] private int bonusPoints = 5000; // נקודות בונוס
-    [SerializeField] private Rigidbody2D rb;
-    SoundManager soundManager;
-    private void Awake()
+    public class Coin : MonoBehaviour
     {
-        if (rb == null)
+        [SerializeField] private int bonusPoints = 5000; 
+        [SerializeField] private Rigidbody2D rb;
+        SoundManager _soundManager;
+        private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
             if (rb == null)
             {
-                Debug.LogError("No Rigidbody2D found! Make sure the coin has a Rigidbody2D component.");
+                rb = GetComponent<Rigidbody2D>();
+                if (rb == null)
+                {
+                    Debug.LogError("No Rigidbody2D found! Make sure the coin has a Rigidbody2D component.");
+                }
             }
+            _soundManager = SoundManager.Instance;
         }
-        soundManager = SoundManager.Instance;
-    }
     
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Charlie"))
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            //Debug.Log("Player collected the coin!");
-            GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
-            //GameManager.Instance.AddScore(bonusPoints); // הוספת נקודות לשחקן
-            Destroy(gameObject); // השמדת המטבע
-            soundManager.PlayMoneyCollectionSound(transform);
+            if (other.gameObject.CompareTag("Charlie"))
+            {
+                GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
+                Destroy(gameObject); 
+                _soundManager.PlayMoneyCollectionSound(transform);
+            }
         }
     }
 }

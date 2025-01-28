@@ -1,4 +1,5 @@
 using System.Collections;
+using Charlie;
 using UnityEngine;
 
 public class CharlieHealth : MonoBehaviour
@@ -46,6 +47,7 @@ public class CharlieHealth : MonoBehaviour
             {
                 HandleGameOver();
                 animator.SetTrigger(Reset);
+                //GetComponent<CharlieShild>().ResetPassCounter();
                 ResetLives();
             }
             else

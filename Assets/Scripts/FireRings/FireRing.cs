@@ -1,4 +1,5 @@
 using System;
+using Charlie;
 using Pool;
 using UnityEngine;
 public enum FireRingType
@@ -6,7 +7,7 @@ public enum FireRingType
     Regular,
     WithMoneySack
 }
-public class FireRing : MonoBehaviour, IPoolable
+public class FireRing : Obstacle, IPoolable
 {
     private protected FireRingType ringType = FireRingType.Regular;
     
@@ -17,9 +18,9 @@ public class FireRing : MonoBehaviour, IPoolable
     private Camera mainCamera;
     
 
-    protected virtual void Start()
+    protected override void Start()
     {
-        
+        base.Start();
         mainCamera = GameManager.Instance.MainCamera;
         if (mainCamera == null)
         {
@@ -57,12 +58,22 @@ public class FireRing : MonoBehaviour, IPoolable
     {
         if (collision.gameObject.CompareTag("Charlie"))
         {
+            CharlieShild shild = collision.gameObject.GetComponent<CharlieShild>();
+            if (shild != null && shild.IsShieldActive())
+            {
+                return;
+            }
+            if (shild != null)
+            {
+                shild.ResetPassCounter();
+            }
             hasCollided = true;
             CharlieHealth health = collision.gameObject.GetComponent<CharlieHealth>();
             if (health != null)
             {
                 health.TakeDamage();
             }
+            
         }
     }
 
@@ -80,10 +91,15 @@ public class FireRing : MonoBehaviour, IPoolable
            
             if (!hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
             {
-                //GameManager.Instance.AddScore(jumpPoints);
                 GameManager.Instance.GetUIPresenter().AddPoints(jumpPoints);
+                CharlieShild shild = other.GetComponent<CharlieShild>();
+                if (shild != null && !shild.IsShieldActive())
+                {
+                    shild.AddPass();
+                }
             }
             hasCollided = false;
+            
         }
     }
 

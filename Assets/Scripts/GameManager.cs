@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FlamingPots;
 using Pool;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -9,7 +10,7 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public bool IsGameActive { get; private set; } = false;
+    public bool IsGameActive { get; set; } = false;
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject charlie;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     private List<FlamingPot> activePots = new List<FlamingPot>();
     
     public Camera MainCamera => mainCamera;
+    public GameObject Charlie => charlie;
     
     [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
     public UIModel _UIModel= new UIModel();

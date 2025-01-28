@@ -1,138 +1,135 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
+using Charlie;
 using UnityEngine;
 
-public class FlamingPot : MonoBehaviour
+namespace FlamingPots
 {
-    //[SerializeField] private GameObject charlie;
-    [SerializeField] private GameObject coinPrefab;
-    [SerializeField] private Transform coinSpawnPoint;
-    [SerializeField] private float launchForce = 5f; // עוצמת השיגור
-    [SerializeField] private float rotationSpeed = 300f;
-    private bool hasCollided = false;
-    private int jumpCount = 0;
-    private int jumpPoints = 200;
-    private bool isCameraReady = false;
-    private Camera mainCamera;
-    private void Start()
+    public class FlamingPot : Obstacle
     {
-        /*if (charlie == null)
+        [SerializeField] private GameObject coinPrefab;
+        [SerializeField] private Transform coinSpawnPoint;
+        [SerializeField] private float launchForce = 5f;
+        [SerializeField] private float rotationSpeed = 300f;
+        private bool _hasCollided = false;
+        private int _jumpCount = 0;
+        private readonly int _jumpPoints = 200;
+        private bool _isCameraReady = false;
+        private Camera _mainCamera;
+        protected override void Start()
         {
-            Debug.LogError("Charlie reference is missing in FlamingPot!");
-        }*/
-        if (coinPrefab == null)
-        {
-            Debug.LogError("Coin prefab is missing in FlamingPot! Please assign it in the Inspector.");
-        }
-        if (coinSpawnPoint == null)
-        {
-            Debug.LogError("Coin spawn point is missing in FlamingPot! Please assign it in the Inspector.");
-        }
-        mainCamera = GameManager.Instance.MainCamera;
-        GameManager.Instance.RegisterPot(this);
-        //Debug.Log($"Pot starting at position: {transform.position}");
-        StartCoroutine(WaitForCameraReady());
-
-    }
-
-    private void OnEnable()
-    {
-        jumpCount = 0;
-        hasCollided = false;
-    }
-    
-    private IEnumerator WaitForCameraReady()
-    {
-        // המתן עד שהמצלמה תגיע למיקום שלה
-        yield return new WaitForEndOfFrame(); // המתנה לפריים אחד
-        yield return new WaitUntil(() => mainCamera.transform.position != Vector3.zero);
-
-        isCameraReady = true;
-//        Debug.Log("Camera is ready, starting to track pots.");
-    }
-    
-    private void Update()
-    {
-        if (!isCameraReady || mainCamera == null) return;
-
-        // חשב את גבול המסך השמאלי בעולם
-        Vector3 screenLeft = new Vector3(0, Screen.height / 2f, mainCamera.nearClipPlane);
-        Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
-        //Debug.Log($"World Left: {worldLeft.x}, Pot Position: {transform.position.x}");
-
-         // בדוק האם הטבעת יצאה מגבול המסך + 3 מטר
-        if (transform.position.x < worldLeft.x-3)
-        {
-            //Debug.Log($"Destroying pot at position: {transform.position}");
-            //Destroy(gameObject);
-            gameObject.SetActive(false);
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Charlie"))
-        {
-            hasCollided = true;
-            CharlieHealth health = collision.gameObject.GetComponent<CharlieHealth>();
-            if (health != null)
+            base.Start();
+            if (coinPrefab == null)
             {
-                health.TakeDamage();
+                Debug.LogError("Coin prefab is missing in FlamingPot! Please assign it in the Inspector.");
             }
-        }
-    }
-    
-    /*private void OnDestroy()
-    {
-        // הסר את הסיר מה-GameManager
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.UnregisterPot(this);
-        }
-    }*/
+            if (coinSpawnPoint == null)
+            {
+                Debug.LogError("Coin spawn point is missing in FlamingPot! Please assign it in the Inspector.");
+            }
+            _mainCamera = GameManager.Instance.MainCamera;
+            GameManager.Instance.RegisterPot(this);
+            StartCoroutine(WaitForCameraReady());
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Charlie")) 
-        {
-            Collider2D triggerCollider = GetComponent<Collider2D>();
-            Collider2D playerCollider = other.GetComponent<Collider2D>();
-            
-           Vector2 triggerMin = triggerCollider.bounds.min;
-           Vector2 triggerMax = triggerCollider.bounds.max;
-           Vector2 playerMin = playerCollider.bounds.min;
-           Vector2 playerMax = playerCollider.bounds.max;
-           
-           if (!hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
-           {
-               jumpCount++;
-               //GameManager.Instance.AddScore(jumpPoints);
-               GameManager.Instance.GetUIPresenter().AddPoints(jumpPoints);
-               
-               if (jumpCount >= 5)
-               {
-                   SpawnCoin();
-                   jumpCount = 0; // אפס את מונה הקפיצות
-               }
-           }
-           hasCollided = false;
         }
-    }
-    private void SpawnCoin()
-    {
+    
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _jumpCount = 0;
+            _hasCollided = false;
+        }
+    
+        private IEnumerator WaitForCameraReady()
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitUntil(() => _mainCamera.transform.position != Vector3.zero);
+
+            _isCameraReady = true;
+        }
+    
+        private void Update()
+        {
+            if (!_isCameraReady || _mainCamera == null) return;
+
+            Vector3 screenLeft = new Vector3(0, Screen.height / 2f, _mainCamera.nearClipPlane);
+            Vector3 worldLeft = _mainCamera.ScreenToWorldPoint(screenLeft);
         
-        if (coinPrefab != null && coinSpawnPoint != null)
-        {
-            GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
-            //coin
-            Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
-            if (coinRb != null)
+            if (transform.position.x < worldLeft.x-3)
             {
-                Vector2 launchDirection = new Vector2(-Mathf.Cos(60 * Mathf.Deg2Rad), Mathf.Sin(60 * Mathf.Deg2Rad)); // 60 מעלות שמאלה
-                coinRb.AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
-                coinRb.angularVelocity = rotationSpeed;
+                gameObject.SetActive(false);
             }
-            Debug.Log("Coin spawned!");
+        }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Charlie"))
+            {
+                CharlieShild shild = collision.gameObject.GetComponent<CharlieShild>();
+                if (shild != null && shild.IsShieldActive()) // אם המגן פעיל, התעלם
+                {
+                    return;
+                }
+                if (shild != null)
+                {
+                    shild.ResetPassCounter();
+                }
+                _hasCollided = true;
+                CharlieHealth health = collision.gameObject.GetComponent<CharlieHealth>();
+                if (health != null)
+                {
+                    health.TakeDamage();
+                }
+            
+            }
+        }
+    
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Charlie")) 
+            {
+                Collider2D triggerCollider = GetComponent<Collider2D>();
+                Collider2D playerCollider = other.GetComponent<Collider2D>();
+            
+                Vector2 triggerMin = triggerCollider.bounds.min;
+                Vector2 triggerMax = triggerCollider.bounds.max;
+                Vector2 playerMin = playerCollider.bounds.min;
+                Vector2 playerMax = playerCollider.bounds.max;
+           
+                if (!_hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
+                {
+                    _jumpCount++;
+                    CharlieShild shild = other.GetComponent<CharlieShild>();
+                    if (shild != null && !shild.IsShieldActive())
+                    {
+                        shild.AddPass();
+                    }
+                    GameManager.Instance.GetUIPresenter().AddPoints(_jumpPoints);
+               
+               
+                    if (_jumpCount >= 5)
+                    {
+                        SpawnCoin();
+                        _jumpCount = 0; 
+                    }
+                }
+                _hasCollided = false;
+           
+            }
+        }
+        private void SpawnCoin()
+        {
+        
+            if (coinPrefab != null && coinSpawnPoint != null)
+            {
+                GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
+                Rigidbody2D coinRb = coin.GetComponent<Rigidbody2D>();
+                if (coinRb != null)
+                {
+                    Vector2 launchDirection = new Vector2(-Mathf.Cos(60 * Mathf.Deg2Rad), Mathf.Sin(60 * Mathf.Deg2Rad)); 
+                    coinRb.AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
+                    coinRb.angularVelocity = rotationSpeed;
+                }
+            }
         }
     }
 }
