@@ -12,13 +12,10 @@ namespace Pool
             base.Awake();
             if (Instance != null)
             {
-                Debug.LogError("Multiple SmallFireRingPool instances detected!");
                 Destroy(gameObject);
                 return;
             }
-
             Instance = this;
-            //Debug.Log($"{GetType().Name} initialized successfully.");
         }
     }
 

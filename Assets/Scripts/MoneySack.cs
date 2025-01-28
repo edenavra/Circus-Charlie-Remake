@@ -26,7 +26,6 @@ public class MoneySack : MonoBehaviour
             {
                 bonusPoints = 500;
             }
-            Debug.Log("Player collected the money sack!");
             GameManager.Instance.AddScore(bonusPoints); 
             soundManager.PlayMoneyCollectionSound(transform);
             gameObject.SetActive(false);
