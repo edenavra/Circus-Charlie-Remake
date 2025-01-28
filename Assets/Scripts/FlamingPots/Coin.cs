@@ -22,9 +22,9 @@ public class Coin : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Charlie"))
         {
-            Debug.Log("Player collected the coin!");
-            
-            GameManager.Instance.AddScore(bonusPoints); // הוספת נקודות לשחקן
+            //Debug.Log("Player collected the coin!");
+            GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
+            //GameManager.Instance.AddScore(bonusPoints); // הוספת נקודות לשחקן
             Destroy(gameObject); // השמדת המטבע
             soundManager.PlayMoneyCollectionSound(transform);
         }

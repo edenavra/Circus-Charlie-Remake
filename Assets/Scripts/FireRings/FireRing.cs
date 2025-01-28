@@ -79,7 +79,8 @@ public class FireRing : MonoBehaviour, IPoolable
            
             if (!hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
             {
-                GameManager.Instance.AddScore(jumpPoints);
+                //GameManager.Instance.AddScore(jumpPoints);
+                GameManager.Instance.GetUIPresenter().AddPoints(jumpPoints);
             }
             hasCollided = false;
         }

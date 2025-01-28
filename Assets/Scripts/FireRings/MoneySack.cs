@@ -26,7 +26,8 @@ public class MoneySack : MonoBehaviour
             {
                 bonusPoints = 500;
             }
-            GameManager.Instance.AddScore(bonusPoints); 
+            //GameManager.Instance.AddScore(bonusPoints); 
+            GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
             soundManager.PlayMoneyCollectionSound(transform);
             gameObject.SetActive(false);
         }

@@ -54,7 +54,7 @@ public class FlamingPot : MonoBehaviour
         Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
         //Debug.Log($"World Left: {worldLeft.x}, Pot Position: {transform.position.x}");
 
-         // בדוק האם הטבעת יצאה מגבול המסך + 5 מטר
+         // בדוק האם הטבעת יצאה מגבול המסך + 3 מטר
         if (transform.position.x < worldLeft.x-3)
         {
             //Debug.Log($"Destroying pot at position: {transform.position}");
@@ -98,7 +98,8 @@ public class FlamingPot : MonoBehaviour
            if (!hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
            {
                jumpCount++;
-               GameManager.Instance.AddScore(jumpPoints);
+               //GameManager.Instance.AddScore(jumpPoints);
+               GameManager.Instance.GetUIPresenter().AddPoints(jumpPoints);
                
                if (jumpCount >= 5)
                {

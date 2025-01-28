@@ -1614,10 +1614,10 @@ MonoBehaviour:
   smallFireRingPool: {fileID: 869515038}
   ringConfigs:
   - fireRingType: 0
-    weight: 0.8
+    weight: 0.9
     height: -0.41
   - fireRingType: 1
-    weight: 0.2
+    weight: 0.1
     height: -0.23
 --- !u!4 &596339692 stripped
 Transform:

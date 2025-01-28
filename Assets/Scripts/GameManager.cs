@@ -15,8 +15,7 @@ public class GameManager : MonoBehaviour
     private Vector3 _lastCheckpointPosition;
     private List<FlamingPot> activePots = new List<FlamingPot>();
     private int currentLives = 5;
-    public List<SmallFireRing> smallFireRings = new List<SmallFireRing>(); 
-
+    
     public Camera MainCamera => mainCamera;
     
     [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
@@ -48,6 +47,10 @@ public class GameManager : MonoBehaviour
             Debug.LogError("No Charlie found! Make sure to assign the Charlie GameObject in the Inspector.");
         }
         _uiPresenter= new UIPresenter(_UIModel,uiView);
+        if (_uiPresenter == null)
+        {
+            Debug.LogError("UIPresenter is not initialized!");
+        }
        
     }
 
@@ -86,12 +89,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f); 
         }
     }
-
-
-    public void AddScore(int score)
-    {
-        _uiPresenter.AddPoints(score); 
-    }
+    
     
     public void UpdateLives(int lives)
     {
@@ -104,14 +102,6 @@ public class GameManager : MonoBehaviour
             Debug.LogError("UIPresenter is not initialized. Cannot update lives.");
         }
         
-    }
-    
-    private void UpdateUILives()
-    {
-        if (uiView != null)
-        {
-            uiView.UpdateLives(currentLives);
-        }
     }
     
     public void UpdateCheckpoint(Vector3 checkpointPosition)
@@ -175,8 +165,8 @@ public class GameManager : MonoBehaviour
         // Reset player position
         
         charlie.transform.position = _lastCheckpointPosition;
-        
-        UpdateLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
+        _uiPresenter.SetLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
+        //UpdateLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
         // Hide black screen
         //blackScreenCanvas.gameObject.SetActive(false);
         
@@ -243,13 +233,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void AddSmallFireRing(SmallFireRing ring)
+    public UIPresenter GetUIPresenter()
     {
-        smallFireRings.Add(ring);
+        return _uiPresenter;
     }
     
-    public void RemoveSmallFireRing(SmallFireRing ring)
-    {
-        smallFireRings.Remove(ring);
-    }
+    
 }
