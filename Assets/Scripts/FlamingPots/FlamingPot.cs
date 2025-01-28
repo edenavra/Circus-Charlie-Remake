@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlamingPot : MonoBehaviour
@@ -34,6 +35,12 @@ public class FlamingPot : MonoBehaviour
         StartCoroutine(WaitForCameraReady());
 
     }
+
+    private void OnEnable()
+    {
+        jumpCount = 0;
+        hasCollided = false;
+    }
     
     private IEnumerator WaitForCameraReady()
     {
@@ -58,7 +65,8 @@ public class FlamingPot : MonoBehaviour
         if (transform.position.x < worldLeft.x-3)
         {
             //Debug.Log($"Destroying pot at position: {transform.position}");
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,14 +82,14 @@ public class FlamingPot : MonoBehaviour
         }
     }
     
-    private void OnDestroy()
+    /*private void OnDestroy()
     {
         // הסר את הסיר מה-GameManager
         if (GameManager.Instance != null)
         {
             GameManager.Instance.UnregisterPot(this);
         }
-    }
+    }*/
 
     private void OnTriggerExit2D(Collider2D other)
     {

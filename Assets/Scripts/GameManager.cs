@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject charlie;
+    private Vector3 _firstCheckpointPosition;
     private Vector3 _lastCheckpointPosition;
     private List<FlamingPot> activePots = new List<FlamingPot>();
-    //private int currentLives = 5;
     
     public Camera MainCamera => mainCamera;
     
@@ -61,8 +61,9 @@ public class GameManager : MonoBehaviour
         var scoreModel = new UIModel();
         _uiPresenter = new UIPresenter(scoreModel, uiView);
         _lastCheckpointPosition = charlie.transform.position;
+        _firstCheckpointPosition = _lastCheckpointPosition;
         _uiPresenter.UpdateLives();
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
         IsGameActive = false;
         ScreenManager.Instance.ShowMainMenu();
     }
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Game Started!");
         IsGameActive = true; // מפעיל את המשחק
         //ScreenManager.Instance.ShowGameScreen();
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
         _uiPresenter.StartFlashing();
         StartStage();
     }
@@ -79,8 +80,8 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         IsGameActive = false; // משהה את המשחק
-       // Time.timeScale = 0f;
-        ScreenManager.Instance.ShowStageScreen();
+        Time.timeScale = 0f;
+        //ScreenManager.Instance.ShowStageScreen();
         _uiPresenter.StopFlashing();
         EndStage();
     }
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
         ScreenManager.Instance.ShowGameScreen();
         _uiPresenter.StartFlashing();
         StartStage();
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
     }
     public void StartStage()
     {
@@ -169,8 +170,18 @@ public class GameManager : MonoBehaviour
             if (potPosition.x > screenBottomLeft.x && potPosition.x < screenTopRight.x &&
                 potPosition.y > screenBottomLeft.y && potPosition.y < screenTopRight.y)
             {
-                Destroy(pot.gameObject);
+                //Destroy(pot.gameObject);
+                pot.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void ResetPots()
+    {
+        for(int i = activePots.Count - 1; i >= 0; i--)
+        {
+            FlamingPot pot = activePots[i];
+            pot.gameObject.SetActive(true);
         }
     }
 
@@ -187,7 +198,7 @@ public class GameManager : MonoBehaviour
         //blackScreenCanvas.gameObject.SetActive(true);
         
         // Wait for 1 second
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSecondsRealtime(2);
         
         DestroyPotsOnScreen();        
         ResetAllRings();
@@ -206,15 +217,53 @@ public class GameManager : MonoBehaviour
         ResumeGame();
     }
 
-    public void GameOver()
+    public void Win()
     {
-        Debug.Log("Game Over!");
-        ScreenManager.Instance.ShowGameOver();
-        // Optionally: Load a Game Over screen or restart the level
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine(HandleWin());
     }
     
+    private IEnumerator HandleWin()
+    {
+        PauseGame();
+        SoundManager.Instance.PlayWinSound(transform);
+        yield return  StartCoroutine(AwardBonusPointsCoroutine());
+        yield return new WaitForSecondsRealtime(1);
+        //PauseGame();
+        ScreenManager.Instance.ShowMainMenu();
+        
+        ResetGame();
+    }
 
+    public void GameOver()
+    {
+        StartCoroutine(HandleGameOver());
+    }
+
+    private IEnumerator HandleGameOver()
+    {
+        PauseGame();
+        ScreenManager.Instance.ShowGameOver();
+        yield return new WaitForSecondsRealtime(2);
+        ResetGame();
+    }
+    private void ResetGame()
+    {
+        // Reset all rings
+        ResetAllRings();
+        
+        // Reset all pots
+        ResetPots();
+        
+        // Reset player position
+        charlie.transform.position = _firstCheckpointPosition;
+        
+        // Reset UI
+        _uiPresenter.ResetUI();
+        
+        //charlie.ResetHealth();
+        // Reset game state
+        IsGameActive = false;
+    }
     private void ResetAllRings()
     {
         if (FireRingPool.Instance == null)
@@ -253,14 +302,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator AwardBonusPointsCoroutine()
     {
-        int bonusPoints = _uiPresenter.GetBonusPoints();
-    
-        while (bonusPoints > 0)
+        while (_uiPresenter.GetBonusPoints() > 0)
         {
             _uiPresenter.ReduceBonusPoints(1);
             _uiPresenter.AddPoints(1);
-            bonusPoints--;
-            yield return new WaitForSeconds(0.01f); 
+            yield return new WaitForSecondsRealtime(0.005f); 
         }
     }
     

@@ -42,9 +42,9 @@ public class MainMenuController : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             flashingImage.enabled = true;
-            yield return new WaitForSeconds(flashDuration / 2);
+            yield return new WaitForSecondsRealtime(flashDuration / 2);
             flashingImage.enabled = false;
-            yield return new WaitForSeconds(flashDuration / 2);
+            yield return new WaitForSecondsRealtime(flashDuration / 2);
            
         }
 
@@ -52,7 +52,7 @@ public class MainMenuController : MonoBehaviour
         SoundManager.Instance.PlayWinSound(transform);
 
         // מחכים מעט לפני המעבר לשלב
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
 
         // קריאה לפונקציה שתתחיל את המשחק
         ScreenManager.Instance.StartGameSequence();        

@@ -70,7 +70,7 @@ public class ScreenManager : MonoBehaviour
 
     public void ShowGameOver()
     {
-        gameCanvas.gameObject.SetActive(false);
+        gameCanvas.gameObject.SetActive(true);
         gameOverCanvas.gameObject.SetActive(true);
 
         // אחרי 3 שניות חוזרים לתפריט הראשי
@@ -79,7 +79,7 @@ public class ScreenManager : MonoBehaviour
 
     private IEnumerator ReturnToMainMenuAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         gameStarted = false;
         ShowMainMenu();
     }

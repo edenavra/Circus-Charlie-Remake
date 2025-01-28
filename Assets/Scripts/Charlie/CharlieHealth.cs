@@ -45,6 +45,8 @@ public class CharlieHealth : MonoBehaviour
             if (currentLives == 0)
             {
                 HandleGameOver();
+                animator.SetTrigger(Reset);
+                ResetLives();
             }
             else
             {
@@ -81,5 +83,10 @@ public class CharlieHealth : MonoBehaviour
     public int getCurrentLives()
     {
         return currentLives;
+    }
+    
+    private void ResetLives()
+    {
+        currentLives = _startingLives;
     }
 }

@@ -71,12 +71,6 @@ public class UIPresenter
             lastLives = model.Lives;
         }
     }
-
-    public void ResetScore()
-    {
-        model.ResetScore();
-        UpdateView();
-    }
     
     public void StartFlashing()
     {
@@ -91,5 +85,11 @@ public class UIPresenter
     public int GetBonusPoints()
     {
         return model.BonusPoints;
+    }
+
+    public void ResetUI()
+    {
+        model.ResetUIState();
+        UpdateView();
     }
 }

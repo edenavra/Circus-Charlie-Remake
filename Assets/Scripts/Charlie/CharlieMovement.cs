@@ -10,14 +10,14 @@ public class CharlieMovement : MonoBehaviour
     [SerializeField] private  Animator animator; 
     private Rigidbody2D rb; 
     private bool isGrounded = true;
-    private SoundManager soundManager;
+    //private SoundManager soundManager;
     
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
-        soundManager = SoundManager.Instance;
+        //soundManager = SoundManager.Instance;
     }
 
     void Update()
@@ -41,7 +41,7 @@ public class CharlieMovement : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false; 
-            soundManager.PlayCharlieJumpSound(transform);
+            SoundManager.Instance.PlayCharlieJumpSound(transform);
         }
 
         animator.SetBool(IsGrounded, isGrounded);
@@ -59,8 +59,7 @@ public class CharlieMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Podium"))
         { 
             animator.SetTrigger(Win);
-            soundManager.PlayWinSound(transform);
-            GameManager.Instance.AwardBonusPoints();
+            GameManager.Instance.Win();
         }
     }
 

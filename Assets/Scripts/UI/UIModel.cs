@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIModel
 {
-    private int score;
+    private int score = 0;
     private int lives = 5;
     private int bonusPoints = 5000;
 
@@ -15,9 +15,11 @@ public class UIModel
         score += points;
     }
 
-    public void ResetScore()
+    public void ResetUIState()
     {
-        score = 0;
+        score = 0; 
+        lives = 5;
+        bonusPoints = 5000; 
     }
     public void SetLives(int lives)
     {
