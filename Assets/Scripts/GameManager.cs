@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject charlie;
     private Vector3 _lastCheckpointPosition;
     private List<FlamingPot> activePots = new List<FlamingPot>();
-    private int currentLives = 5;
+    //private int currentLives = 5;
     
     public Camera MainCamera => mainCamera;
     
