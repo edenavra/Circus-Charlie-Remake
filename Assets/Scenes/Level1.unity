@@ -1225,7 +1225,7 @@ Canvas:
   m_GameObject: {fileID: 427088168}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 518807495}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -1553,10 +1553,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.022354694
-    y: 0.1861252
-    width: 0.9538003
-    height: 0.6260575
+    x: 0.1491228
+    y: 0.3510467
+    width: 0.7017544
+    height: 0.2979066
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 40
@@ -1586,7 +1586,7 @@ Transform:
   m_GameObject: {fileID: 518807492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -34.80835, y: 0.0011200011, z: -10}
+  m_LocalPosition: {x: -34.813236, y: 0.0013999939, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1787,7 +1787,7 @@ Canvas:
   m_GameObject: {fileID: 551245872}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 518807495}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -2319,7 +2319,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -2868,7 +2868,7 @@ Canvas:
   m_GameObject: {fileID: 709813059}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 518807495}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -4256,7 +4256,7 @@ Transform:
   m_GameObject: {fileID: 1025073884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.901466, y: 0.3239994, z: -10}
+  m_LocalPosition: {x: -35.90384, y: 0.3239994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4275,7 +4275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoundingShape2D: {fileID: 912266530}
-  Damping: 0.5
+  Damping: 0
   SlowingDistance: 5
   OversizeWindow:
     Enabled: 1
@@ -4816,7 +4816,7 @@ Canvas:
   m_GameObject: {fileID: 1180203843}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 518807495}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
