@@ -56,9 +56,6 @@ TagManager:
   - name: Floor
     uniqueID: 3132764803
     locked: 0
-  - name: Podium
-    uniqueID: 30096243
-    locked: 0
   - name: BackOnstacle
     uniqueID: 3163062167
     locked: 0
@@ -70,6 +67,12 @@ TagManager:
     locked: 0
   - name: Obstacles
     uniqueID: 4253535653
+    locked: 0
+  - name: Podium
+    uniqueID: 30096243
+    locked: 0
+  - name: UI
+    uniqueID: 158497771
     locked: 0
   m_RenderingLayers:
   - Default

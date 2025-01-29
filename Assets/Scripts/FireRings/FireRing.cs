@@ -9,20 +9,22 @@ public enum FireRingType
 }
 public class FireRing : Obstacle, IPoolable
 {
-    private protected FireRingType ringType = FireRingType.Regular;
+    private protected FireRingType RingType = FireRingType.Regular;
     
     private Rigidbody2D _rb;
-    private bool hasCollided = false;
-    private int jumpPoints = 100;
-    private float ringSpeed = -1f;
-    private Camera mainCamera;
+    private bool _hasCollided = false;
+    private int _jumpPoinזts = 100;
+    private float _ringSpeed = -1f;
+    private Camera _mainCamera;
     
-
+    /// <summary>
+    /// Initializes the FireRing object and configures physics constraints.
+    /// </summary>
     protected override void Start()
     {
         base.Start();
-        mainCamera = GameManager.Instance.MainCamera;
-        if (mainCamera == null)
+        _mainCamera = GameManager.Instance.MainCamera;
+        if (_mainCamera == null)
         {
             return;
         }
@@ -34,11 +36,11 @@ public class FireRing : Obstacle, IPoolable
 
     private void Update()
     {
-        if (mainCamera == null) return;
+        if (_mainCamera == null) return;
         if (!GameManager.Instance.IsGameActive) return;
 
         Vector3 screenLeft = new Vector3(0, Screen.height / 2f, 0f);
-        Vector3 worldLeft = mainCamera.ScreenToWorldPoint(screenLeft);
+        Vector3 worldLeft = _mainCamera.ScreenToWorldPoint(screenLeft);
 
         if (transform.position.x < worldLeft.x)
         {
@@ -48,12 +50,16 @@ public class FireRing : Obstacle, IPoolable
 
     private void FixedUpdate()
     {
-        if (_rb.linearVelocity.magnitude != ringSpeed)
+        if (_rb.linearVelocity.magnitude != _ringSpeed)
         {
-            _rb.linearVelocity = new Vector2(ringSpeed, 0f);
+            _rb.linearVelocity = new Vector2(_ringSpeed, 0f);
         }
         
     }
+    
+    /// <summary>
+    /// Handles collisions with Charlie and walls, triggering health loss or returning to pool.
+    /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Charlie"))
@@ -67,7 +73,7 @@ public class FireRing : Obstacle, IPoolable
             {
                 shild.ResetPassCounter();
             }
-            hasCollided = true;
+            _hasCollided = true;
             CharlieHealth health = collision.gameObject.GetComponent<CharlieHealth>();
             if (health != null)
             {
@@ -80,7 +86,11 @@ public class FireRing : Obstacle, IPoolable
             ReturnToPool();
         }
     }
-
+    
+    /// <summary>
+    /// Handles logic when the player exits the fire ring's collider.
+    /// Awards points if Charlie successfully jumps through the ring.
+    /// </summary>
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Charlie")) 
@@ -93,46 +103,57 @@ public class FireRing : Obstacle, IPoolable
             Vector2 playerMin = playerCollider.bounds.min;
             Vector2 playerMax = playerCollider.bounds.max;
            
-            if (!hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
+            if (!_hasCollided && (playerMin.x > triggerMax.x || playerMax.x < triggerMin.x))
             {
-                GameManager.Instance.GetUIPresenter().AddPoints(jumpPoints);
+                GameManager.Instance.GetUIPresenter().AddPoints(_jumpPoinזts);
                 CharlieShild shild = other.GetComponent<CharlieShild>();
                 if (shild != null && !shild.IsShieldActive())
                 {
                     shild.AddPass();
                 }
             }
-            hasCollided = false;
+            _hasCollided = false;
             
         }
     }
-
+    
+    /// <summary>
+    /// Resets FireRing state when reusing from the object pool.
+    /// </summary>
     public virtual void Reset()
     {
         if (GameManager.Instance == null)
         {
             return;
         }
-        mainCamera = GameManager.Instance.MainCamera;
+        _mainCamera = GameManager.Instance.MainCamera;
   
-        if (mainCamera == null )
+        if (_mainCamera == null )
         {
             return;
         }
-        hasCollided = false;
+        _hasCollided = false;
     }
-
+    
+    /// <summary>
+    /// Handles when the fire ring reaches the end of the screen.
+    /// </summary>
     public virtual void OnEndOfScreen()
     {
         ReturnToPool();
     }
+    /// <summary>
+    /// Returns the fire ring object back to the pool.
+    /// </summary>
     protected virtual void ReturnToPool()
     {
         FireRingPool.Instance.Return(this);
     }
-    
+    /// <summary>
+    /// Retrieves the type of the fire ring.
+    /// </summary>
     public FireRingType GetFireRingType()
     {
-        return ringType;
+        return RingType;
     }
 }

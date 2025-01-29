@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace FlamingPots
 {
+    /// <summary>
+    /// Represents a flaming pot obstacle that interacts with the player and can spawn coins.
+    /// </summary>
     public class FlamingPot : Obstacle
     {
         [SerializeField] private GameObject coinPrefab;
@@ -15,6 +18,9 @@ namespace FlamingPots
         private readonly int _jumpPoints = 200;
         private bool _isCameraReady = false;
         private Camera _mainCamera;
+        /// <summary>
+        /// Initializes the FlamingPot, registers it in the GameManager, and waits for the camera to be ready.
+        /// </summary>
         protected override void Start()
         {
             base.Start();
@@ -31,14 +37,19 @@ namespace FlamingPots
             StartCoroutine(WaitForCameraReady());
 
         }
-    
+        /// <summary>
+        /// Resets internal values when the object is enabled.
+        /// </summary>
         protected override void OnEnable()
         {
             base.OnEnable();
             _jumpCount = 0;
             _hasCollided = false;
         }
-    
+        
+        /// <summary>
+        /// Ensures the camera is properly positioned before enabling gameplay interactions.
+        /// </summary>
         private IEnumerator WaitForCameraReady()
         {
             yield return new WaitForEndOfFrame();
@@ -46,7 +57,10 @@ namespace FlamingPots
 
             _isCameraReady = true;
         }
-    
+        
+        /// <summary>
+        /// Handles the movement of the FlamingPot and disables it when it moves off-screen.
+        /// </summary>
         private void Update()
         {
             if (!_isCameraReady || _mainCamera == null) return;
@@ -59,6 +73,10 @@ namespace FlamingPots
                 gameObject.SetActive(false);
             }
         }
+        
+        /// <summary>
+        /// Handles collision with the player, checking for shield activation and applying damage.
+        /// </summary>
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Charlie"))
@@ -82,7 +100,9 @@ namespace FlamingPots
             }
         }
     
-
+        /// <summary>
+        /// Handles the player's exit from the trigger collider, adding jump points and spawning a coin if needed.
+        /// </summary>
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Charlie")) 
@@ -116,6 +136,9 @@ namespace FlamingPots
            
             }
         }
+        /// <summary>
+        /// Spawns a coin at a predefined spawn point and applies a launch force.
+        /// </summary>
         public void SpawnCoin()
         {
         

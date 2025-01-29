@@ -2,94 +2,118 @@ using UnityEngine;
 
 public class UIPresenter
 {
-    private readonly UIModel model;
-    private readonly UIView view;
+    /// <summary>
+    /// Manages the interaction between the UI model and the UI view, ensuring updates are reflected correctly.
+    /// </summary>
+    private readonly UIModel _model;
+    private readonly UIView _view;
     
-    private int lastScore = -1;
-    private int lastLives = -1;
-    private int lastBonusPoints = -1;
-
+    private int _lastScore = -1;
+    private int _lastLives = -1;
+    private int _lastBonusPoints = -1;
+    /// <summary>
+    /// Initializes the UI presenter with a model and a view, updating the view immediately.
+    /// </summary>
     public UIPresenter(UIModel model, UIView view)
     {
-        this.model = model;
-        this.view = view;
+        this._model = model;
+        this._view = view;
         UpdateView();
         StartFlashing();
     }
-
+    /// <summary>
+    /// Adds points to the model and updates the score in the view.
+    /// </summary>
     public void AddPoints(int points)
     {
-        model.AddPoints(points);
+        _model.AddPoints(points);
         UpdateScore();
     }
-    
-    public void ReduceLife()
-    {
-        model.ReduceLife();
-        UpdateLives();
-    }
-    
+    /// <summary>
+    /// Sets the number of lives in the model and updates the view.
+    /// </summary>
     public void SetLives(int lives)
     {
-        model.SetLives(lives);
+        _model.SetLives(lives);
         UpdateLives();
     }
+    /// <summary>
+    /// Reduces the bonus points in the model and updates the view.
+    /// </summary>
     public void ReduceBonusPoints(int amount)
     {
-        model.ReduceBonusPoints(amount);
+        _model.ReduceBonusPoints(amount);
         UpdateBonusPoints();
     }
+    /// <summary>
+    /// Updates the entire UI view to reflect the current model state.
+    /// </summary>
     private void UpdateView()
     {
         UpdateScore();
         UpdateLives();
         UpdateBonusPoints();
     }
-    
+    /// <summary>
+    /// Updates the bonus points display if there has been a change.
+    /// </summary>
     private void UpdateBonusPoints()
     {
-        if (model.BonusPoints != lastBonusPoints)
+        if (_model.BonusPoints != _lastBonusPoints)
         {
-            view.UpdateBonusPoints(model.BonusPoints);
-            lastBonusPoints = model.BonusPoints;
+            _view.UpdateBonusPoints(_model.BonusPoints);
+            _lastBonusPoints = _model.BonusPoints;
         }
     }
+    /// <summary>
+    /// Updates the score display if there has been a change.
+    /// </summary>
     private void UpdateScore()
     {
-        if (model.Score != lastScore)
+        if (_model.Score != _lastScore)
         {
-            view.UpdateScore(model.Score);
-            lastScore = model.Score;
+            _view.UpdateScore(_model.Score);
+            _lastScore = _model.Score;
         }
     }
-
+    /// <summary>
+    /// Updates the lives display if there has been a change.
+    /// </summary>
     public void UpdateLives()
     {
-        if (model.Lives != lastLives)
+        if (_model.Lives != _lastLives)
         {
-            view.UpdateLives(model.Lives);
-            lastLives = model.Lives;
+            _view.UpdateLives(_model.Lives);
+            _lastLives = _model.Lives;
         }
     }
-    
+    /// <summary>
+    /// Starts the UI flashing effect.
+    /// </summary>
     public void StartFlashing()
     {
-        view.StartFlashing();
+        _view.StartFlashing();
     }
-
+    /// <summary>
+    /// Stops the UI flashing effect.
+    /// </summary>
     public void StopFlashing()
     {
-        view.StopFlashing();
+        _view.StopFlashing();
     }
-    
+    /// <summary>
+    /// Retrieves the current bonus points from the model.
+    /// </summary>
     public int GetBonusPoints()
     {
-        return model.BonusPoints;
+        return _model.BonusPoints;
     }
-
+    /// <summary>
+    /// Resets the UI state to its initial values and updates the view.
+    /// </summary>
     public void ResetUI()
     {
-        model.ResetUIState();
+        _model.ResetUIState();
         UpdateView();
     }
 }

@@ -70,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -108,7 +108,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -422,7 +422,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Charlie2_0: 5835385330485978377
+      Charlie2_1: -8082220472475983237
+      Charlie2_10: 773480900345390715
+      Charlie2_11: -2934532963996108332
+      Charlie2_2: -6417929189020711769
+      Charlie2_3: -3949975889460293672
+      Charlie2_4: -7877517893895219506
+      Charlie2_5: 2063654826190751282
+      Charlie2_6: 2581305221000675114
+      Charlie2_7: -4180572833781019462
+      Charlie2_8: -5606061545884023334
+      Charlie2_9: -3744399224927670323
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

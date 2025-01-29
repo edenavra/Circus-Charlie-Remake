@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+/// <summary>
+/// Manages the display of different UI screens in the game, including the main menu, game screen, stage screen, and game over screen.
+/// </summary>
 public class ScreenManager : MonoBehaviour
 {
     public static ScreenManager Instance { get; private set; }
 
     [Header("Canvas References")]
-    [SerializeField] private Canvas mainMenuCanvas;   // מסך הפתיחה
-    [SerializeField] private Canvas stageCanvas;      // מסך "Stage 1"
-    [SerializeField] private Canvas gameCanvas;       // מסך המשחק
-    [SerializeField] private Canvas gameOverCanvas;   // מסך "Game Over"
-
-    //[Header("Audio Clips")]
-    //[SerializeField] private AudioClip startSound;  // סאונד פתיחה
-
-    private bool gameStarted = false; 
-
+    [SerializeField] private Canvas mainMenuCanvas;   
+    [SerializeField] private Canvas stageCanvas;      
+    [SerializeField] private Canvas gameCanvas;      
+    [SerializeField] private Canvas gameOverCanvas;   
+    /// <summary>
+    /// Initializes the singleton instance of the ScreenManager.
+    /// </summary>
     private void Awake()
     {
         if (Instance == null)
@@ -29,21 +28,10 @@ public class ScreenManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
-    {
-        
-    }
-
-    /*private void Update()
-    {
-        // מאפשר להתחיל את המשחק בלחיצת Enter (New Input System)
-        if (Keyboard.current.enterKey.wasPressedThisFrame && !gameStarted)
-        {
-            StartGame();
-        }
-    }*/
-
+    
+    /// <summary>
+    /// Displays the main menu screen and hides other screens.
+    /// </summary>
     public void ShowMainMenu()
     {
         mainMenuCanvas.gameObject.SetActive(true);
@@ -51,39 +39,36 @@ public class ScreenManager : MonoBehaviour
         gameCanvas.gameObject.SetActive(false);
         gameOverCanvas.gameObject.SetActive(false);
     }
-
-    public void StartGame()
-    {
-        //mainMenuCanvas.gameObject.SetActive(false);
-        gameStarted = true;
-        ShowStageScreen();
-    }
-
+    /// <summary>
+    /// Displays the stage screen while keeping the game screen active, hiding others.
+    /// </summary>
     public void ShowStageScreen()
     {
         stageCanvas.gameObject.SetActive(true);
         mainMenuCanvas.gameObject.SetActive(false);
         gameCanvas.gameObject.SetActive(true);
         gameOverCanvas.gameObject.SetActive(false);
-        
     }
-
+    /// <summary>
+    /// Displays the game over screen and returns to the main menu after a delay.
+    /// </summary>
     public void ShowGameOver()
     {
         gameCanvas.gameObject.SetActive(true);
         gameOverCanvas.gameObject.SetActive(true);
-
-        // אחרי 3 שניות חוזרים לתפריט הראשי
         StartCoroutine(ReturnToMainMenuAfterDelay(3f));
     }
-
+    /// <summary>
+    /// Returns to the main menu after a specified delay.
+    /// </summary>
     private IEnumerator ReturnToMainMenuAfterDelay(float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        gameStarted = false;
         ShowMainMenu();
     }
-    
+    /// <summary>
+    /// Displays the main game screen, hiding all other screens.
+    /// </summary>
     public void ShowGameScreen()
     { 
         mainMenuCanvas.gameObject.SetActive(false);
@@ -91,21 +76,21 @@ public class ScreenManager : MonoBehaviour
         stageCanvas.gameObject.SetActive(false);
         gameOverCanvas.gameObject.SetActive(false);
     }
-    
+    /// <summary>
+    /// Starts the game sequence, showing the stage screen first before transitioning to the game screen.
+    /// </summary>
     public void StartGameSequence()
     {
         StartCoroutine(GameSequenceCoroutine());
     }
-
+    
+    /// <summary>
+    /// Coroutine that displays the stage screen for a short duration before starting the game.
+    /// </summary>
     private IEnumerator GameSequenceCoroutine()
     {
-        // הצגת מסך השלב
         ShowStageScreen();
-
-        // המתנה של 2 שניות
         yield return new WaitForSecondsRealtime(2f);
-
-        // מעבר למסך המשחק והפעלת המשחק
         ShowGameScreen();
         GameManager.Instance.StartGame();
     }

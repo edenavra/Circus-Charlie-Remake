@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Charlie;
 using FlamingPots;
 using Pool;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.Serialization;
-
+/// <summary>
+/// Manages the game's core mechanics, including checkpoints, active objects, UI updates, and game state transitions.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -14,21 +17,19 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject charlie;
+    [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
     private Vector3 _firstCheckpointPosition;
     private Vector3 _lastCheckpointPosition;
-    private List<FlamingPot> activePots = new List<FlamingPot>();
-    
+    private List<FlamingPot> _activePots = new List<FlamingPot>();
+    private UIModel _uiModel= new UIModel();
+    private UIPresenter _uiPresenter; 
+    private Coroutine _bonusCoroutine;
+    private bool _isStageActive = false;
     public Camera MainCamera => mainCamera;
     public GameObject Charlie => charlie;
-    
-    [FormerlySerializedAs("scoreView")] [SerializeField] private UIView uiView;
-    public UIModel _UIModel= new UIModel();
-    private UIPresenter _uiPresenter; 
-    
-    private Coroutine bonusCoroutine;
-    private bool isStageActive = false;
-    
-    
+    /// <summary>
+    /// Initializes the singleton instance and UI components.
+    /// </summary>
     private void Awake()
     {
         if (Instance != null)
@@ -45,19 +46,19 @@ public class GameManager : MonoBehaviour
             Debug.LogError("UIView is not assigned in GameManager. Please assign it in the Inspector.");
             return;
         }
-        
         if(charlie == null)
         {
             Debug.LogError("No Charlie found! Make sure to assign the Charlie GameObject in the Inspector.");
         }
-        _uiPresenter= new UIPresenter(_UIModel,uiView);
+        _uiPresenter= new UIPresenter(_uiModel,uiView);
         if (_uiPresenter == null)
         {
             Debug.LogError("UIPresenter is not initialized!");
         }
-       
     }
-
+    // <summary>
+    /// Sets up initial UI values, checkpoint, and game state.
+    /// </summary>
     private void Start()
     {
         var scoreModel = new UIModel();
@@ -69,96 +70,118 @@ public class GameManager : MonoBehaviour
         IsGameActive = false;
         ScreenManager.Instance.ShowMainMenu();
     }
+    /// <summary>
+    /// Starts the game, resets time scale, and plays background music.
+    /// </summary>
     public void StartGame()
     {
-        //Debug.Log("Game Started!");
-        IsGameActive = true; // מפעיל את המשחק
+        IsGameActive = true; 
         Time.timeScale = 1f;
         SoundManager.Instance.PlayBackgroundMusic();
-        //ScreenManager.Instance.ShowGameScreen();
         _uiPresenter.StartFlashing();
         StartStage();
     }
-    
+    /// <summary>
+    /// Pauses the game and stops background music.
+    /// </summary>
     public void PauseGame()
     {
-        IsGameActive = false; // משהה את המשחק
+        IsGameActive = false;
         Time.timeScale = 0f;
         SoundManager.Instance.StopBackgroundMusic();
-        //ScreenManager.Instance.ShowStageScreen();
         _uiPresenter.StopFlashing();
         EndStage();
     }
-    
+    /// <summary>
+    /// Resumes the game and restarts background music.
+    /// </summary>
     public void ResumeGame()
     {
-        IsGameActive = true; // מפעיל את המשחק
+        IsGameActive = true; 
         ScreenManager.Instance.ShowGameScreen();
         _uiPresenter.StartFlashing();
         StartStage();
         Time.timeScale = 1f;
         SoundManager.Instance.PlayBackgroundMusic();
     }
+    /// <summary>
+    /// Starts a stage and begins reducing bonus points over time.
+    /// </summary>
     public void StartStage()
     {
-        if (bonusCoroutine != null)
-            StopCoroutine(bonusCoroutine);
+        if (_bonusCoroutine != null)
+            StopCoroutine(_bonusCoroutine);
         
-        isStageActive = true;
-        bonusCoroutine = StartCoroutine(ReduceBonusOverTime());
+        _isStageActive = true;
+        _bonusCoroutine = StartCoroutine(ReduceBonusOverTime());
     }
-
+    /// <summary>
+    /// Ends a stage and stops the bonus reduction coroutine.
+    /// </summary>
     public void EndStage()
     {
-        if (bonusCoroutine != null)
-            StopCoroutine(bonusCoroutine);
+        if (_bonusCoroutine != null)
+            StopCoroutine(_bonusCoroutine);
 
-        isStageActive = false;
+        _isStageActive = false;
     }
-    
+    /// <summary>
+    /// Reduces bonus points periodically while the stage is active.
+    /// </summary>
     private IEnumerator ReduceBonusOverTime()
     {
-        while (isStageActive)
+        while (_isStageActive)
         {
             _uiPresenter.ReduceBonusPoints(10);
             yield return new WaitForSeconds(0.5f); 
         }
     }
-    
-    
-    public void UpdateLives(int lives)
-    {
-        if (_uiPresenter != null)
-        {
-            _uiPresenter.SetLives(lives);
-        }
-        else
-        {
-            Debug.LogError("UIPresenter is not initialized. Cannot update lives.");
-        }
-        
-    }
-    
+    /// <summary>
+    /// Updates the player's checkpoint position.
+    /// </summary>
     public void UpdateCheckpoint(Vector3 checkpointPosition)
     {
         _lastCheckpointPosition = checkpointPosition;
     }
+    
+    /// <summary>
+    /// Resets the game state and UI.
+    /// </summary>
+    public void ResetGame()
+    {
+        ResetAllRings();
+        ResetPots();
+        charlie.transform.position = _firstCheckpointPosition;
+        _uiPresenter.ResetUI();
+        IsGameActive = false;
+    }
+    /// <summary>
+    /// Handles game over sequence and resets the game.
+    /// </summary>
+    public void GameOver()
+    {
+        StartCoroutine(HandleGameOver());
+    }
+    private IEnumerator HandleGameOver()
+    {
+        PauseGame();
+        ScreenManager.Instance.ShowGameOver();
+        yield return new WaitForSecondsRealtime(5);
+        ResetGame();
+    }
+    /// <summary>
+    /// Registers a flaming pot to the active pots list.
+    /// </summary>
     public void RegisterPot(FlamingPot pot)
     {
-        if (!activePots.Contains(pot))
+        if (!_activePots.Contains(pot))
         {
-            activePots.Add(pot);
+            _activePots.Add(pot);
         }
     }
-    
-    public void UnregisterPot(FlamingPot pot)
-    {
-        if (activePots.Contains(pot))
-        {
-            activePots.Remove(pot);
-        }
-    }
-    
+    /// <summary>
+    /// Disables all flaming pots currently on screen.
+    /// </summary>
     public void DestroyPotsOnScreen()
     {
         Camera mainCamera = Camera.main;
@@ -167,66 +190,61 @@ public class GameManager : MonoBehaviour
         Vector3 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
         Vector3 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 
-        for (int i = activePots.Count - 1; i >= 0; i--)
+        for (int i = _activePots.Count - 1; i >= 0; i--)
         {
-            FlamingPot pot = activePots[i];
+            FlamingPot pot = _activePots[i];
             Vector3 potPosition = pot.transform.position;
 
             if (potPosition.x > screenBottomLeft.x && potPosition.x < screenTopRight.x &&
                 potPosition.y > screenBottomLeft.y && potPosition.y < screenTopRight.y)
             {
-                //Destroy(pot.gameObject);
                 pot.gameObject.SetActive(false);
             }
         }
     }
-
+    /// <summary>
+    /// Reactivates all registered flaming pots.
+    /// </summary>
     private void ResetPots()
     {
-        for(int i = activePots.Count - 1; i >= 0; i--)
+        for(int i = _activePots.Count - 1; i >= 0; i--)
         {
-            FlamingPot pot = activePots[i];
+            FlamingPot pot = _activePots[i];
             pot.gameObject.SetActive(true);
         }
     }
-
+    /// <summary>
+    /// Resets the game level by restarting from the last checkpoint.
+    /// </summary>
     public void ResetLevel()
     {
         StartCoroutine(RestartFromCheckpoint());
     }
-    
+    /// <summary>
+    /// Coroutine that handles restarting the level from the last checkpoint.
+    /// </summary>
     private IEnumerator RestartFromCheckpoint()
     {
         PauseGame();
         ScreenManager.Instance.ShowStageScreen();
-        // Display black screen
-        //blackScreenCanvas.gameObject.SetActive(true);
-        
-        // Wait for 1 second
         yield return new WaitForSecondsRealtime(5);
-        
         DestroyPotsOnScreen();        
         ResetAllRings();
-        
-        // Reset player position
-        
         charlie.transform.position = _lastCheckpointPosition;
         _uiPresenter.SetLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
-        //UpdateLives(charlie.GetComponent<CharlieHealth>().GetCurrentLives());
-        // Hide black screen
-        //blackScreenCanvas.gameObject.SetActive(false);
-        
-        
-
-        // Resume game
         ResumeGame();
     }
-
+    
+    /// <summary>
+    /// Handles the win sequence and awards bonus points before resetting the game.
+    /// </summary>
     public void Win()
     {
         StartCoroutine(HandleWin());
     }
-    
+    /// <summary>
+    /// Coroutine that plays the win animation and awards bonus points before restarting.
+    /// </summary>
     private IEnumerator HandleWin()
     {
         PauseGame();
@@ -234,42 +252,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(3);
         yield return  StartCoroutine(AwardBonusPointsCoroutine());
         yield return new WaitForSecondsRealtime(1);
-        //PauseGame();
         ScreenManager.Instance.ShowMainMenu();
-        
         ResetGame();
     }
-
-    public void GameOver()
-    {
-        StartCoroutine(HandleGameOver());
-    }
-
-    private IEnumerator HandleGameOver()
-    {
-        PauseGame();
-        ScreenManager.Instance.ShowGameOver();
-        yield return new WaitForSecondsRealtime(5);
-        ResetGame();
-    }
-    private void ResetGame()
-    {
-        // Reset all rings
-        ResetAllRings();
-        
-        // Reset all pots
-        ResetPots();
-        
-        // Reset player position
-        charlie.transform.position = _firstCheckpointPosition;
-        
-        // Reset UI
-        _uiPresenter.ResetUI();
-        
-        //charlie.ResetHealth();
-        // Reset game state
-        IsGameActive = false;
-    }
+    
+    /// <summary>
+    /// Resets all fire rings in the game.
+    /// </summary>
     private void ResetAllRings()
     {
         if (FireRingPool.Instance == null)
@@ -301,14 +290,11 @@ public class GameManager : MonoBehaviour
     }
 
     
-    public void AwardBonusPoints()
-    {
-        StartCoroutine(AwardBonusPointsCoroutine());
-    }
-
+    /// <summary>
+    /// Awards bonus points to the player over time.
+    /// </summary>
     private IEnumerator AwardBonusPointsCoroutine()
     {
-        //SoundManager.Instance.PlaySound(SoundManager.SoundType.PointUp, transform, true, 0, 50f);
         while (_uiPresenter.GetBonusPoints() > 0)
         {
             if (_uiPresenter.GetBonusPoints() % 10 == 0)
@@ -320,14 +306,19 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.005f); 
         }
     }
-    
+    /// <summary>
+    /// Retrieves the UI presenter instance.
+    /// </summary>
     public UIPresenter GetUIPresenter()
     {
         return _uiPresenter;
     }
+    /// <summary>
+    /// Returns a list of active flaming pots.
+    /// </summary>
     public List<FlamingPot> GetActivePots()
     {
-        return activePots;
+        return _activePots;
     }
     
 }

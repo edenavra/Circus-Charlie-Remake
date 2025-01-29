@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+/// <summary>
+/// Manages all in-game sounds, including background music and sound effects.
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
-
+    /// <summary>
+    /// Enum defining different sound types available in the game.
+    /// </summary>
     public enum SoundType
     {
         Jump,
@@ -34,7 +38,9 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<SoundType, AudioClip> soundClips;
     private bool _gameStarted = false;
-
+    /// <summary>
+    /// Initializes the singleton instance and sets up audio sources.
+    /// </summary>
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -56,7 +62,6 @@ public class SoundManager : MonoBehaviour
             _audioSources[i] = gameObject.AddComponent<AudioSource>();
         }
 
-        // מילוי המפה בצלילים
         soundClips = new Dictionary<SoundType, AudioClip>
         {
             { SoundType.Jump, jumpClip },
@@ -68,12 +73,22 @@ public class SoundManager : MonoBehaviour
             { SoundType.PointUp, pointUpClip }
         };
     }
-
+    /// <summary>
+    /// Marks the game as started to allow playing sounds.
+    /// </summary>
     private void Start()
     {
         _gameStarted = true;
     }
-
+    /// <summary>
+    /// Plays a specific sound effect.
+    /// </summary>
+    /// <param name="soundType">The type of sound to play.</param>
+    /// <param name="objTransform">The transform of the object triggering the sound.</param>
+    /// <param name="isSpatial">Determines if the sound should be spatialized.</param>
+    /// <param name="delay">Delay before playing the sound.</param>
+    /// <param name="volume">Volume of the sound.</param>
+    /// <param name="isLoop">Indicates if the sound should loop.</param>
     public void PlaySound(SoundType soundType, Transform objTransform, bool isSpatial = false, float delay = 0, float volume = 0.8f, bool isLoop = false)
     {
         if (!_gameStarted || !soundClips.TryGetValue(soundType, out AudioClip clip) || clip == null)
@@ -82,11 +97,9 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // בחירת מקור שמע זמין
         var audioSource = _audioSources[_currentAudioSourceIndex];
         _currentAudioSourceIndex = (_currentAudioSourceIndex + 1) % _audioSources.Length;
 
-        // הגדרת הפרמטרים של השמע
         audioSource.transform.position = objTransform.position;
         audioSource.spatialBlend = isSpatial ? 1f : 0f;
         audioSource.pitch = 1f;
@@ -96,7 +109,9 @@ public class SoundManager : MonoBehaviour
         audioSource.Pause();
         audioSource.PlayDelayed(delay);
     }
-
+    /// <summary>
+    /// Plays the background music if it's not already playing.
+    /// </summary>
     public void PlayBackgroundMusic()
     {
         if (backgroundMusicSource != null && backgroundMusicClip != null && !backgroundMusicSource.isPlaying)
@@ -109,7 +124,9 @@ public class SoundManager : MonoBehaviour
             backgroundMusicSource.Play();
         }
     }
-
+    /// <summary>
+    /// Stops the background music if it's currently playing.
+    /// </summary>
     public void StopBackgroundMusic()
     {
         if (backgroundMusicSource != null && backgroundMusicSource.isPlaying)

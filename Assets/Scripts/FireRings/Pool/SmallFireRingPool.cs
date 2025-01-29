@@ -1,3 +1,4 @@
+using FireRings;
 using Pool;
 using UnityEngine;
 namespace Pool

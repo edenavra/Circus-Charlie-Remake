@@ -6,47 +6,61 @@ using UnityEngine.InputSystem;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private Image flashingImage;  // התמונה שצריכה להבהב
-    [SerializeField] private float flashDuration = 0.3f; // משך ההבהוב
-    //[SerializeField] private AudioClip startSound; // הסאונד שיתנגן
-    private PlayerControls controls;
-    private bool hasStarted = false;
+    /// <summary>
+    /// Controls the main menu behavior, including flashing visuals and handling user input.
+    /// </summary>
+    [SerializeField] private Image flashingImage; 
+    [SerializeField] private float flashDuration = 0.3f;
+    private PlayerControls _controls;
+    private bool _hasStarted = false;
+    /// <summary>
+    /// Initializes player controls and binds the Enter key to starting the game.
+    /// </summary>
     private void Awake()
     {
-        controls = new PlayerControls();
-
-        // חיבור הכפתור Enter
-        controls.Menue.Submit.performed += ctx => OnEnterPressed();
+        _controls = new PlayerControls();
+        _controls.Menue.Submit.performed += ctx => OnEnterPressed();
     }
+    /// <summary>
+    /// Ensures the flashing image is assigned and initializes its state.
+    /// </summary>
     private void Start()
     {
-        // אם התמונה לא הופיעה, נגריל אותה
         if (flashingImage == null)
         {
             flashingImage = GetComponent<Image>();
         }
         flashingImage.enabled = false;
     }
-
+    /// <summary>
+    /// Enables input controls when the menu is active.
+    /// </summary>
     private void OnEnable()
     {
-        controls.Enable();
-        hasStarted = false;
+        _controls.Enable();
+        _hasStarted = false;
     }
-    
+    /// <summary>
+    /// Disables input controls when the menu is deactivated.
+    /// </summary>
     private void OnDisable()
     {
-        controls.Disable();
+        _controls.Disable();
     }
-    
+    /// <summary>
+    /// Handles the Enter key press event to start the game sequence.
+    /// </summary>
     private void OnEnterPressed()
     {
-        if (!hasStarted)
+        if (!_hasStarted)
         {
-            hasStarted = true;
+            _hasStarted = true;
             StartCoroutine(FlashAndStartGame());
         }
     }
+    /// <summary>
+    /// Coroutine that flashes the screen before starting the game.
+    /// </summary>
     private IEnumerator FlashAndStartGame()
     {
         for (int i = 0; i < 5; i++)
