@@ -37,6 +37,11 @@ namespace Charlie
         }
         private void OnEnable()
         {
+            if (_controls == null)
+            {
+                Debug.LogError("CharlieMovement: _controls is null in OnEnable(). Make sure it is initialized in Awake().");
+                return;
+            }
             _controls.Enable();
         }
         
@@ -57,11 +62,11 @@ namespace Charlie
         {
             if (_isGrounded)
             {
-                _rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce); // משנה רק את Y
                 _isGrounded = false;
+                animator.SetBool(IsGrounded, _isGrounded);
                 SoundManager.Instance.PlaySound(SoundManager.SoundType.Jump, transform, false, 0, 3f);
             }
-            animator.SetBool(IsGrounded, _isGrounded);
         }
         
         /// <summary>
@@ -69,8 +74,8 @@ namespace Charlie
         /// </summary>
         private void HandleMovement()
         {
-            transform.position += new Vector3(_moveDirection, 0, 0) * moveSpeed * Time.deltaTime;
-            animator.SetFloat(Speed, _moveDirection);
+            _rb.linearVelocity = new Vector2(_moveDirection * moveSpeed, _rb.linearVelocity.y);
+            animator.SetFloat(Speed, Mathf.Abs(_moveDirection));
         }
         
         /// <summary>

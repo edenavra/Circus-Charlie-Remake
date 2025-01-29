@@ -28,6 +28,10 @@ namespace Charlie
         private void Start()
         {
             _charlieCollider = GetComponent<Collider2D>();
+            if (_charlieCollider == null)
+            {
+                Debug.LogError("CharlieShild: No Collider2D found! Make sure the GameObject has a Collider2D component.");
+            }
             shieldVisual.SetActive(false);
         }
     
@@ -61,7 +65,14 @@ namespace Charlie
         /// </summary>
         public void DeactivateShield()
         {
-            OnShieldDeactivated?.Invoke(_charlieCollider); 
+            if (OnShieldDeactivated != null)
+            {
+                OnShieldDeactivated.Invoke(_charlieCollider);
+            }
+            else
+            {
+                Debug.LogWarning("CharlieShild: OnShieldDeactivated has no listeners.");
+            }
             _isShieldActive = false;
             shieldVisual.SetActive(false);
         }
