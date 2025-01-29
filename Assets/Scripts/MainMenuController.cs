@@ -9,8 +9,15 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Image flashingImage;  // התמונה שצריכה להבהב
     [SerializeField] private float flashDuration = 0.3f; // משך ההבהוב
     //[SerializeField] private AudioClip startSound; // הסאונד שיתנגן
-
+    private PlayerControls controls;
     private bool hasStarted = false;
+    private void Awake()
+    {
+        controls = new PlayerControls();
+
+        // חיבור הכפתור Enter
+        controls.Menue.Submit.performed += ctx => OnEnterPressed();
+    }
     private void Start()
     {
         // אם התמונה לא הופיעה, נגריל אותה
@@ -23,22 +30,25 @@ public class MainMenuController : MonoBehaviour
 
     private void OnEnable()
     {
+        controls.Enable();
         hasStarted = false;
     }
-
-    private void Update()
+    
+    private void OnDisable()
     {
-        // בדיקה אם השחקן לחץ על Enter (New Input System)
-        if (Keyboard.current.enterKey.wasPressedThisFrame && !hasStarted)
+        controls.Disable();
+    }
+    
+    private void OnEnterPressed()
+    {
+        if (!hasStarted)
         {
-            hasStarted = true; // מונע לחיצות נוספות
+            hasStarted = true;
             StartCoroutine(FlashAndStartGame());
         }
     }
-
     private IEnumerator FlashAndStartGame()
     {
-        // הפעלת אפקט ההבהוב
         for (int i = 0; i < 5; i++)
         {
             flashingImage.enabled = true;
@@ -48,13 +58,10 @@ public class MainMenuController : MonoBehaviour
            
         }
 
-        // הפעלת הסאונד
         SoundManager.Instance.PlayWinSound(transform);
 
-        // מחכים מעט לפני המעבר לשלב
         yield return new WaitForSecondsRealtime(1f);
 
-        // קריאה לפונקציה שתתחיל את המשחק
         ScreenManager.Instance.StartGameSequence();        
         
     }

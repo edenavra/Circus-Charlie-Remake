@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Charlie
 {
     public class CharlieMovement : MonoBehaviour
     {
+        private PlayerControls controls;
+        private Vector2 moveInput;
+        private float moveDirection = 0f;
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         private static readonly int Win = Animator.StringToHash("Win");
@@ -13,25 +17,52 @@ namespace Charlie
         private Rigidbody2D rb; 
         private bool isGrounded = true;
     
+        private void Awake()
+        {
+            controls = new PlayerControls();
+            rb = GetComponent<Rigidbody2D>();
+        
+            controls.Player.Move.performed += ctx => moveDirection = ctx.ReadValue<float>();
+            Debug.Log("Move Performed: " + moveDirection);
+            controls.Player.Move.canceled += ctx => moveDirection = 0f;
+            
+            controls.Player.Jump.performed += ctx => Jump();
 
+        }
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
             rb.freezeRotation = true;
         }
-
+        private void OnEnable()
+        {
+            controls.Enable();
+        }
+        
+        private void OnDisable()
+        {
+            controls.Disable();
+        }
         void Update()
         {
             if (!GameManager.Instance.IsGameActive) return;
             HandleMovement();
-            HandleJump();
+        }
+        private void Jump()
+        {
+            if (isGrounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                isGrounded = false;
+                SoundManager.Instance.PlayCharlieJumpSound(transform);
+            }
+            animator.SetBool(IsGrounded, isGrounded);
         }
 
         private void HandleMovement()
         {
-            float moveDirection = Input.GetAxis("Horizontal");
-            Vector3 movement = new Vector3(moveDirection, 0, 0) * moveSpeed * Time.deltaTime;
-            transform.position += movement;
+            Debug.Log($"MoveDirection: {moveDirection}");
+            transform.position += new Vector3(moveDirection, 0, 0) * moveSpeed * Time.deltaTime;
             animator.SetFloat(Speed, moveDirection);
         }
 
@@ -41,19 +72,17 @@ namespace Charlie
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isGrounded = false; 
+                animator.SetBool(IsGrounded, isGrounded);
                 SoundManager.Instance.PlayCharlieJumpSound(transform);
             }
-
-            animator.SetBool(IsGrounded, isGrounded);
-       
         }
     
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Floor"))
             {
-            
                 isGrounded = true;
+                animator.SetBool(IsGrounded, isGrounded);
             }
 
             if (collision.gameObject.CompareTag("Podium"))
@@ -68,6 +97,7 @@ namespace Charlie
             if (collision.gameObject.CompareTag("Floor"))
             {
                 isGrounded = false;
+                animator.SetBool(IsGrounded, isGrounded);
             }
         }
     
