@@ -73,7 +73,11 @@ public class FireRing : Obstacle, IPoolable
             {
                 health.TakeDamage();
             }
-            
+        }
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            ReturnToPool();
         }
     }
 
