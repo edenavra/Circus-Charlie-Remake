@@ -6,11 +6,9 @@ using Random = UnityEngine.Random;
 public class MoneySack : MonoBehaviour
 {
     [SerializeField] private int bonusPoints = 500;
-    SoundManager soundManager;
 
     private void Start()
     {
-        soundManager = SoundManager.Instance;
         ResetSack();
     }
 
@@ -28,7 +26,7 @@ public class MoneySack : MonoBehaviour
             }
             //GameManager.Instance.AddScore(bonusPoints); 
             GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
-            soundManager.PlayMoneyCollectionSound(transform);
+            SoundManager.Instance.PlaySound(SoundManager.SoundType.MoneyCollection, transform, false, 0, 2f);
             gameObject.SetActive(false);
         }
     }

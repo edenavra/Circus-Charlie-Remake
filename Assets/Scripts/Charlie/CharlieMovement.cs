@@ -23,7 +23,7 @@ namespace Charlie
             rb = GetComponent<Rigidbody2D>();
         
             controls.Player.Move.performed += ctx => moveDirection = ctx.ReadValue<float>();
-            Debug.Log("Move Performed: " + moveDirection);
+            //Debug.Log("Move Performed: " + moveDirection);
             controls.Player.Move.canceled += ctx => moveDirection = 0f;
             
             controls.Player.Jump.performed += ctx => Jump();
@@ -54,27 +54,16 @@ namespace Charlie
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isGrounded = false;
-                SoundManager.Instance.PlayCharlieJumpSound(transform);
+                SoundManager.Instance.PlaySound(SoundManager.SoundType.Jump, transform, false, 0, 3f);
             }
             animator.SetBool(IsGrounded, isGrounded);
         }
 
         private void HandleMovement()
         {
-            Debug.Log($"MoveDirection: {moveDirection}");
+            //Debug.Log($"MoveDirection: {moveDirection}");
             transform.position += new Vector3(moveDirection, 0, 0) * moveSpeed * Time.deltaTime;
             animator.SetFloat(Speed, moveDirection);
-        }
-
-        private void HandleJump()
-        {
-            if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
-            {
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                isGrounded = false; 
-                animator.SetBool(IsGrounded, isGrounded);
-                SoundManager.Instance.PlayCharlieJumpSound(transform);
-            }
         }
     
         private void OnCollisionEnter2D(Collision2D collision)

@@ -1,33 +1,40 @@
-using UnityEngine.Audio;
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
+using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
-    
-    [Header("Charlie sounds")]
-    [SerializeField] private AudioSource charlieMusicSource;
+
+    public enum SoundType
+    {
+        Jump,
+        Clap,
+        Hit,
+        LevelReset,
+        MoneyCollection,
+        CoinSpawn,
+        PointUp
+    }
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource backgroundMusicSource;
     [SerializeField] private int maxAudioSources = 10;
     private AudioSource[] _audioSources;
     private int _currentAudioSourceIndex = 0;
-    
-    [Header("Clips")]
+
+    [Header("Audio Clips")]
     [SerializeField] private AudioClip backgroundMusicClip;
-    [SerializeField] private AudioClip CharlieJumpClip;
-    [SerializeField] private AudioClip winClip;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip clapClip;
     [SerializeField] private AudioClip hitClip;
     [SerializeField] private AudioClip levelResetClip;
     [SerializeField] private AudioClip moneyCollectionClip;
-    
-    [Header("Background Music")]
-    [SerializeField] private AudioSource backgroundMusicSource;
-    
+    [SerializeField] private AudioClip coinSpawnClip;
+    [SerializeField] private AudioClip pointUpClip;
+
+    private Dictionary<SoundType, AudioClip> soundClips;
     private bool _gameStarted = false;
 
-    
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -37,88 +44,77 @@ public class SoundManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         if (backgroundMusicSource == null)
         {
             backgroundMusicSource = gameObject.AddComponent<AudioSource>();
         }
-        if (charlieMusicSource == null)
-        {
-            charlieMusicSource = gameObject.AddComponent<AudioSource>();
-        }
-        
-        
+
         _audioSources = new AudioSource[maxAudioSources];
         for (int i = 0; i < maxAudioSources; i++)
         {
             _audioSources[i] = gameObject.AddComponent<AudioSource>();
         }
+
+        // מילוי המפה בצלילים
+        soundClips = new Dictionary<SoundType, AudioClip>
+        {
+            { SoundType.Jump, jumpClip },
+            { SoundType.Clap, clapClip },
+            { SoundType.Hit, hitClip },
+            { SoundType.LevelReset, levelResetClip },
+            { SoundType.MoneyCollection, moneyCollectionClip },
+            { SoundType.CoinSpawn, coinSpawnClip },
+            { SoundType.PointUp, pointUpClip }
+        };
     }
-    
+
     private void Start()
     {
         _gameStarted = true;
-        PlayBackgroundMusic();
     }
-    
-    private void PlayBackgroundMusic()
+
+    public void PlaySound(SoundType soundType, Transform objTransform, bool isSpatial = false, float delay = 0, float volume = 0.8f, bool isLoop = false)
     {
-        if (backgroundMusicSource != null && backgroundMusicClip != null)
+        if (!_gameStarted || !soundClips.TryGetValue(soundType, out AudioClip clip) || clip == null)
+        {
+            Debug.LogWarning($"Sound '{soundType}' not found or game not started.");
+            return;
+        }
+
+        // בחירת מקור שמע זמין
+        var audioSource = _audioSources[_currentAudioSourceIndex];
+        _currentAudioSourceIndex = (_currentAudioSourceIndex + 1) % _audioSources.Length;
+
+        // הגדרת הפרמטרים של השמע
+        audioSource.transform.position = objTransform.position;
+        audioSource.spatialBlend = isSpatial ? 1f : 0f;
+        audioSource.pitch = 1f;
+        audioSource.clip = clip;
+        audioSource.volume = volume;
+        audioSource.loop = isLoop;
+        audioSource.Pause();
+        audioSource.PlayDelayed(delay);
+    }
+
+    public void PlayBackgroundMusic()
+    {
+        if (backgroundMusicSource != null && backgroundMusicClip != null && !backgroundMusicSource.isPlaying)
         {
             backgroundMusicSource.clip = backgroundMusicClip;
             backgroundMusicSource.loop = true;
             backgroundMusicSource.spatialBlend = 0f; 
-            backgroundMusicSource.volume = 0.05f;
+            backgroundMusicSource.volume = 0.2f;
             backgroundMusicSource.pitch = 1f;
             backgroundMusicSource.Play();
         }
-        else
+    }
+
+    public void StopBackgroundMusic()
+    {
+        if (backgroundMusicSource != null && backgroundMusicSource.isPlaying)
         {
-            Debug.LogError("Background music source or clip is missing!");
+            backgroundMusicSource.Stop();
         }
-
-    }
-    
-    public void PlaySFX(AudioClip clip,  Transform objTransform, bool isSpatial = false, float delay = 0, float volume = 0.8f)
-    {
-        if (!_gameStarted || clip == null)
-            return;
-        
-        // Get the next AudioSource
-        var audioSource = _audioSources[_currentAudioSourceIndex];
-        _currentAudioSourceIndex = (_currentAudioSourceIndex + 1) % _audioSources.Length;
-
-        // Configure the AudioSource
-        audioSource.transform.position = objTransform.position;
-        audioSource.spatialBlend = isSpatial ? 1f : 0f;
-        
-        audioSource.pitch = 1f;
-        audioSource.clip = clip;
-        audioSource.volume = volume;
-        audioSource.PlayDelayed(delay);
-    }
-    
-    public void PlayCharlieJumpSound(Transform objTransform)
-    {
-        PlaySFX(CharlieJumpClip, objTransform, true, 0, 1f);
-    }
-
-    public void PlayWinSound(Transform objTransform)
-    {
-        PlaySFX(winClip, objTransform, true, 0, 1f);
-    }
-
-    public void PlayHitSound(Transform objTransform)
-    {
-        PlaySFX(hitClip, objTransform, true, 0, 1f);
-    }
-
-    public void PlayLevelResetSound(Transform objTransform)
-    {
-        PlaySFX(levelResetClip, objTransform, true, 0.5f, 1f);
-    }
-
-    public void PlayMoneyCollectionSound(Transform objTransform)
-    {
-        PlaySFX(moneyCollectionClip, objTransform, true, 0, 1f);
     }
 }

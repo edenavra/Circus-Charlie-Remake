@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using Charlie;
+using FlamingPots;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,6 +49,22 @@ public class CheatCodes : MonoBehaviour
         if (Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit5Key.wasPressedThisFrame)
         {
             GameManager.Instance.Charlie.GetComponent<CharlieShild>().DeactivateShield();
+        }
+        
+        if(Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit6Key.wasPressedThisFrame)
+        {
+            ScreenManager.Instance.ShowMainMenu();
+            GameManager.Instance.EndStage();
+            Debug.Log("Game ended!");
+        }
+
+        if (Keyboard.current.leftShiftKey.isPressed && Keyboard.current.digit7Key.wasPressedThisFrame)
+        {
+            List<FlamingPot> flamingPots = GameManager.Instance.GetActivePots();
+            foreach (var flamingPot in flamingPots)
+            {
+                flamingPot.SpawnCoin();
+            }
         }
         
     }

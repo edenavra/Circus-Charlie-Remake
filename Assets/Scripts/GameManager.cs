@@ -73,8 +73,9 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("Game Started!");
         IsGameActive = true; // מפעיל את המשחק
-        //ScreenManager.Instance.ShowGameScreen();
         Time.timeScale = 1f;
+        SoundManager.Instance.PlayBackgroundMusic();
+        //ScreenManager.Instance.ShowGameScreen();
         _uiPresenter.StartFlashing();
         StartStage();
     }
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
     {
         IsGameActive = false; // משהה את המשחק
         Time.timeScale = 0f;
+        SoundManager.Instance.StopBackgroundMusic();
         //ScreenManager.Instance.ShowStageScreen();
         _uiPresenter.StopFlashing();
         EndStage();
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
         _uiPresenter.StartFlashing();
         StartStage();
         Time.timeScale = 1f;
+        SoundManager.Instance.PlayBackgroundMusic();
     }
     public void StartStage()
     {
@@ -200,7 +203,7 @@ public class GameManager : MonoBehaviour
         //blackScreenCanvas.gameObject.SetActive(true);
         
         // Wait for 1 second
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(5);
         
         DestroyPotsOnScreen();        
         ResetAllRings();
@@ -227,7 +230,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator HandleWin()
     {
         PauseGame();
-        SoundManager.Instance.PlayWinSound(transform);
+        SoundManager.Instance.PlaySound(SoundManager.SoundType.Clap, transform, false, 0, 100f);
+        yield return new WaitForSecondsRealtime(3);
         yield return  StartCoroutine(AwardBonusPointsCoroutine());
         yield return new WaitForSecondsRealtime(1);
         //PauseGame();
@@ -245,7 +249,7 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         ScreenManager.Instance.ShowGameOver();
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(5);
         ResetGame();
     }
     private void ResetGame()
@@ -304,8 +308,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator AwardBonusPointsCoroutine()
     {
+        //SoundManager.Instance.PlaySound(SoundManager.SoundType.PointUp, transform, true, 0, 50f);
         while (_uiPresenter.GetBonusPoints() > 0)
         {
+            if (_uiPresenter.GetBonusPoints() % 10 == 0)
+            {
+                SoundManager.Instance.PlaySound(SoundManager.SoundType.PointUp, transform, false, 0, 100f);
+            }
             _uiPresenter.ReduceBonusPoints(1);
             _uiPresenter.AddPoints(1);
             yield return new WaitForSecondsRealtime(0.005f); 
@@ -316,6 +325,9 @@ public class GameManager : MonoBehaviour
     {
         return _uiPresenter;
     }
-    
+    public List<FlamingPot> GetActivePots()
+    {
+        return activePots;
+    }
     
 }

@@ -58,9 +58,9 @@ public class MainMenuController : MonoBehaviour
            
         }
 
-        SoundManager.Instance.PlayWinSound(transform);
+        SoundManager.Instance.PlaySound(SoundManager.SoundType.Clap, transform, false, 0, 100f);
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(2f);
 
         ScreenManager.Instance.StartGameSequence();        
         

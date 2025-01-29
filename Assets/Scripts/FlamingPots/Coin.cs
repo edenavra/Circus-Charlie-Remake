@@ -6,7 +6,6 @@ namespace FlamingPots
     {
         [SerializeField] private int bonusPoints = 5000; 
         [SerializeField] private Rigidbody2D rb;
-        SoundManager _soundManager;
         private void Awake()
         {
             if (rb == null)
@@ -17,7 +16,6 @@ namespace FlamingPots
                     Debug.LogError("No Rigidbody2D found! Make sure the coin has a Rigidbody2D component.");
                 }
             }
-            _soundManager = SoundManager.Instance;
         }
     
         private void OnCollisionEnter2D(Collision2D other)
@@ -26,7 +24,7 @@ namespace FlamingPots
             {
                 GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
                 Destroy(gameObject); 
-                _soundManager.PlayMoneyCollectionSound(transform);
+                SoundManager.Instance.PlaySound(SoundManager.SoundType.MoneyCollection, transform, false, 0, 2f);
             }
         }
     }

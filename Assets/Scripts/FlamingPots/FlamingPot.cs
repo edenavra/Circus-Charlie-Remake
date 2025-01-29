@@ -116,7 +116,7 @@ namespace FlamingPots
            
             }
         }
-        private void SpawnCoin()
+        public void SpawnCoin()
         {
         
             if (coinPrefab != null && coinSpawnPoint != null)
@@ -128,6 +128,7 @@ namespace FlamingPots
                     Vector2 launchDirection = new Vector2(-Mathf.Cos(60 * Mathf.Deg2Rad), Mathf.Sin(60 * Mathf.Deg2Rad)); 
                     coinRb.AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
                     coinRb.angularVelocity = rotationSpeed;
+                    SoundManager.Instance.PlaySound(SoundManager.SoundType.CoinSpawn, transform, false, 0, 50f);
                 }
             }
         }

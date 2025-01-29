@@ -25,14 +25,14 @@ public class CharlieHealth : MonoBehaviour
         _isTakingDamage = true;
 
         animator.SetTrigger(IsHurt);
-        soundManager.PlayHitSound(transform);
+        soundManager.PlaySound(SoundManager.SoundType.Hit, transform, false, 0, 1f);
         StartCoroutine(HandleDamageAnimation());
     }
     
     private IEnumerator HandleDamageAnimation()
     {
         yield return new WaitForSecondsRealtime(0.5f); 
-        soundManager.PlayLevelResetSound(transform);
+        soundManager.PlaySound(SoundManager.SoundType.LevelReset, transform, false, 0.5f, 3f);
         ReduceLife();
         _isTakingDamage = false;
     }
@@ -72,7 +72,6 @@ public class CharlieHealth : MonoBehaviour
     {
         //soundManager.PlayLevelResetSound(transform);
         GameManager.Instance.GameOver();
-        // כאן אפשר להוסיף לוגיקה להפסקת המשחק, מסך סיום וכו'.
     }
     private void ReasetLevel()
     {
