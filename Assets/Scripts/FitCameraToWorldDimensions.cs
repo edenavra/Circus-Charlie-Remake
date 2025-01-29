@@ -25,7 +25,7 @@ public class FitCameraToWorldDimensions : MonoBehaviour
         FitCamera();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         var newRatio = (float)Screen.width / Screen.height;
         if (Math.Abs(newRatio - _currRatio) > RatioChangeThreshold)
