@@ -24,7 +24,7 @@ namespace FlamingPots
             {
                 GameManager.Instance.GetUIPresenter().AddPoints(bonusPoints);
                 Destroy(gameObject); 
-                SoundManager.Instance.PlaySound(SoundManager.SoundType.MoneyCollection, transform, false, 0, 2f);
+                SoundManager.Instance.PlaySound(SoundManager.SoundType.MoneyCollection, transform, false, 0, 3f);
             }
         }
     }
