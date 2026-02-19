@@ -61,4 +61,5 @@ To facilitate rapid testing and iteration during development, the following debu
 
 ## 💡 Notes
 
+- Developed in Unity 2D with C#
 - Created within the Department of Visual Communication at Bezalel Academy of Arts and Design, in collaboration with The Hebrew University of Jerusalem
